@@ -1,10 +1,4 @@
 ﻿using Database.Models;
-using Microsoft.EntityFrameworkCore;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace Database.Repositories
 {
@@ -16,7 +10,7 @@ namespace Database.Repositories
             dbContext = new SchoolDbContext();
         }
 
-        public void AddChool(School school)
+        public void AddSchool(School school)
         {
             dbContext.Schools.Add(school);
             dbContext.SaveChanges();

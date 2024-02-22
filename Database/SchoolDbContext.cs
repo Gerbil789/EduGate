@@ -1,10 +1,10 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using Database.Models;
+﻿using Database.Models;
 using Microsoft.EntityFrameworkCore;
+
+// package manager console commands:
+// dotnet add package Microsoft.EntityFrameworkCore.Tools
+// Add-Migration YourMigrationName
+// Update-Database
 
 namespace Database
 {
