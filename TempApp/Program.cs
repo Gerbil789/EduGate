@@ -22,7 +22,7 @@ class Program
                 Address = "1223 Main"
             };
 
-            schoolRepository.AddChool(school);
+            schoolRepository.AddSchool(school);
 
             var schools = schoolRepository.GetAllSchools();
 

@@ -1,10 +1,13 @@
 ﻿using Database.Models;
 using Microsoft.EntityFrameworkCore;
 
+
 // package manager console commands:
-// dotnet add package Microsoft.EntityFrameworkCore.Tools
+// SET DATABASE AS STARTUP PROJECT !!!
 // Add-Migration YourMigrationName
 // Update-Database
+
+// if ERROR -> dotnet add package Microsoft.EntityFrameworkCore.Tools 
 
 namespace Database
 {
