@@ -5,17 +5,65 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:DesktopApp"
         mc:Ignorable="d"
-        Title="MainWindow" Height="450" Width="800">
-    <Grid>
-        <Rectangle HorizontalAlignment="Left" VerticalAlignment="Stretch" Width="100" Fill="CadetBlue"/>
+        Height="600" Width="920"
+        MinHeight="600" MinWidth="920"
+        WindowStyle="None"
+        ResizeMode="CanResizeWithGrip"
+     
+        Background="Transparent"
+        AllowsTransparency="True">
+    <Border Background="#272527" CornerRadius="10" MouseDown="Border_MouseDown">
+        <Grid>
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="200"/>
+                <ColumnDefinition Width="*"/>
+            </Grid.ColumnDefinitions>
+
+            <Grid.RowDefinitions>
+                <RowDefinition Height="75"/>
+                <RowDefinition Height="*"/>
+            </Grid.RowDefinitions>
 
 
-        <StackPanel HorizontalAlignment="Left" VerticalAlignment="Stretch" Width="100">
-            <Label Content="EduGate" Foreground="White" HorizontalAlignment="Center" FontFamily="Calibri" FontSize="18" FontWeight="Bold"/>
-            <Button Content="Applications"/>
-            <Button Content="Schools"/>
-        </StackPanel>
+
+            <TextBlock Text="EduGate" 
+                VerticalAlignment="Center"
+                HorizontalAlignment="Center"
+                Foreground="White"
+                FontSize="28"/>
+
+            <StackPanel Grid.Row="1">
+                <RadioButton Content="Home"
+                    Height="50"
+                    Foreground="White"
+                    FontSize="14"
+                    Style="{StaticResource MenuButtonTheme}"/>
+                
+                <RadioButton Content="Schools"
+                    Height="50"
+                    Foreground="White"
+                    FontSize="14"
+                    Style="{StaticResource MenuButtonTheme}"/>
+
+                <RadioButton Content="Students"
+                    Height="50"
+                    Foreground="White"
+                    FontSize="14"
+                    Style="{StaticResource MenuButtonTheme}"/>
+
+                <RadioButton Content="Applications"
+                    Height="50"
+                    Foreground="White"
+                    FontSize="14"
+                    Style="{StaticResource MenuButtonTheme}"/>
+            </StackPanel>
+
+           
+
+        </Grid>
+
+       
 
 
-    </Grid>
+    </Border>
 </Window>
