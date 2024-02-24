@@ -32,5 +32,28 @@ namespace DesktopApp
                 this.DragMove();
             }
         }
+
+        protected override void OnKeyDown(KeyEventArgs e)
+        {
+            base.OnKeyDown(e);
+
+            // Toggle fullscreen/windowed mode when the F11 key is pressed
+            if (e.Key == Key.F11)
+            {
+                ToggleFullscreen();
+            }
+        }
+
+        private void ToggleFullscreen()
+        {
+            if (WindowState == WindowState.Normal)
+            {
+                WindowState = WindowState.Maximized;
+            }
+            else
+            {
+                WindowState = WindowState.Normal;
+            }
+        }
     }
 }

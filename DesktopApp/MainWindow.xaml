@@ -3,16 +3,24 @@
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:viewModel="clr-namespace:DesktopApp.MVVM.ViewModel"
         xmlns:local="clr-namespace:DesktopApp"
         mc:Ignorable="d"
         Height="600" Width="920"
         MinHeight="600" MinWidth="920"
         WindowStyle="None"
         ResizeMode="CanResizeWithGrip"
-     
         Background="Transparent"
         AllowsTransparency="True">
-    <Border Background="#272527" CornerRadius="10" MouseDown="Border_MouseDown">
+
+    <Window.DataContext>
+        <viewModel:MainViewModel/>
+    </Window.DataContext>
+
+
+
+    <Border Background="#272527" CornerRadius="10" 
+            MouseDown="Border_MouseDown">
         <Grid>
             <Grid.ColumnDefinitions>
                 <ColumnDefinition Width="200"/>
@@ -37,13 +45,16 @@
                     Height="50"
                     Foreground="White"
                     FontSize="14"
-                    Style="{StaticResource MenuButtonTheme}"/>
-                
+                    Style="{StaticResource MenuButtonTheme}"
+                    IsChecked="True"
+                    Command="{Binding HomeViewCommand}"/>
+
                 <RadioButton Content="Schools"
                     Height="50"
                     Foreground="White"
                     FontSize="14"
-                    Style="{StaticResource MenuButtonTheme}"/>
+                    Style="{StaticResource MenuButtonTheme}"
+                    Command="{Binding SchoolsViewCommand}"/>
 
                 <RadioButton Content="Students"
                     Height="50"
@@ -58,6 +69,14 @@
                     Style="{StaticResource MenuButtonTheme}"/>
             </StackPanel>
 
+            <ContentControl Grid.Row="1" 
+                            Grid.Column="1" 
+                            Margin="10"
+                            Content="{Binding CurrentView}">
+                
+            </ContentControl>
+            
+            
            
 
         </Grid>
