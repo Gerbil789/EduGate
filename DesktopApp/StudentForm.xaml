@@ -5,27 +5,51 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:DesktopApp"
         mc:Ignorable="d"
-        Title="StudentForm" Height="450" Width="800">
+        Title="Student" Height="450" Width="800">
 
-  <Window.Resources>
-    <ResourceDictionary>
-      <local:Converter x:Key="myConv" />
-    </ResourceDictionary>
-  </Window.Resources>
-  <Grid>
-    <StackPanel>
-      <DockPanel Margin="10">
-        <Label Content="FirstName"></Label>
-        <TextBox Text="{Binding FirstName, Converter={StaticResource myConv}}"></TextBox>
-      </DockPanel>
+    <Window.Resources>
+        <ResourceDictionary>
+            <local:Converter x:Key="myConv" />
+        </ResourceDictionary>
+    </Window.Resources>
+    <Grid>
+        <StackPanel>
+            <DockPanel Margin="10" HorizontalAlignment="Left">
+                <Label Content="Jméno:" Width="Auto"></Label>
+                <TextBox Text="{Binding FirstName}" Width="250"></TextBox>
+                <Label Content="Příjmení:" Width="auto"></Label>
+                <TextBox Text="{Binding LastName}" Width="250"></TextBox>
+            </DockPanel>
 
-      <DockPanel Margin="10">
-        <Label Content="LastName"></Label>
-        <TextBox Text="{Binding LastName, Converter={StaticResource myConv}}"></TextBox>
-      </DockPanel>
+            <DockPanel Margin="10" HorizontalAlignment="Left">
+                <Label Content="Datum narození:"></Label>
+                <DatePicker SelectedDate="{Binding BirthDate}" Width="120"></DatePicker>
+            </DockPanel>
 
-      <Button Content="Save" Margin="10" Click="SaveStudent"></Button>
-    </StackPanel>
-     
-  </Grid>
+            <DockPanel Margin="10" HorizontalAlignment="Left">
+                <Label Content="Stát:"></Label>
+                <TextBox Text="{Binding Address.State}" Width="200"></TextBox>
+                <Label Content="Město:"></Label>
+                <TextBox Text="{Binding Address.City}" Width="250"></TextBox>
+                <Label Content="PSČ:"></Label>
+                <TextBox Text="{Binding Address.ZipCode}" Width="100"></TextBox>
+            </DockPanel>
+
+            <DockPanel Margin="10" HorizontalAlignment="Left">
+                <Label Content="Ulice:"></Label>
+                <TextBox Text="{Binding Address.Street}" Width="250"></TextBox>
+                <Label Content="Číslo popisné:"></Label>
+                <TextBox Text="{Binding Address.Number}" Width="80"></TextBox>
+               
+            </DockPanel>
+
+            <DockPanel Margin="10" HorizontalAlignment="Left">
+                <Label Content="Email:"></Label>
+                <TextBox Text="{Binding Email}" Width="250"></TextBox>
+                <Label Content="Telefon:"></Label>
+                <TextBox Text="{Binding Phone}" Width="250"></TextBox>
+            </DockPanel>
+        </StackPanel>
+        <Button Content="Uložit" Margin="10" Click="SaveStudent" Width="100" VerticalAlignment="Bottom"></Button>
+    </Grid>
 </Window>

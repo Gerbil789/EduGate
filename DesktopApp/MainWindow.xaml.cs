@@ -13,83 +13,86 @@ using System.Windows.Shapes;
 
 namespace DesktopApp
 {
-  /// <summary>
-  /// Interaction logic for MainWindow.xaml
-  /// </summary>
-  public partial class MainWindow : Window
-  {
+    public partial class MainWindow : Window
+    {
 
-    public ObservableCollection<Student> Students { get; set; } = new ObservableCollection<Student>
+        public ObservableCollection<Student> Students { get; set; } = new ObservableCollection<Student>
     {
       new Student
       {
         StudentId = 1,
-        FirstName = "John",
-        LastName = "Doe",
+        FirstName = "Vojtěch",
+        LastName = "Rubeš",
+        BirthDate = new System.DateTime(2001, 11, 1),
         Address = new Address
         {
-          Street = "123 Main St",
-          City = "Springfield",
-          State = "IL",
-          ZipCode = "62701"
+          Street = "Komenského",
+          Number = "48",
+          City = "Lhota u Opavy",
+          State = "Česká Republika",
+          ZipCode = "74792"
         },
-        Email = ""
+        Email = "vojta.rubes.01@gmail.com",
+        Phone = "603 197 038"
+
       },
       new Student
       {
         StudentId = 2,
         FirstName = "Jane",
         LastName = "Doe",
+        BirthDate = new System.DateTime(2001, 11, 1),
         Address = new Address
         {
           Street = "123 Main St",
           City = "Springfield",
-          State = "IL",
+          State = "CZ",
           ZipCode = "62701"
         },
         Email = ""
       }
     };
-    public MainWindow()
-    {
-      InitializeComponent();
-      this.DataContext = this;
+        public MainWindow()
+        {
+            InitializeComponent();
+            this.DataContext = this;
+        }
+
+        private void AddStudent(object sender, RoutedEventArgs e)
+        {
+            StudentForm form = new();
+
+            if (form.ShowDialog() == true)
+            {
+                Students.Add(form.NewStudent);
+            }
+        }
+
+        private void DeleteStudent(object sender, RoutedEventArgs e)
+        {
+            Button button = (Button)sender;
+            var student = (Student)button.DataContext;
+            Students.Remove(student);
+        }
+
+        private void EditStudent(object sender, RoutedEventArgs e)
+        {
+            Button button = (Button)sender;
+            var student = (Student)button.DataContext;
+
+            StudentForm form = new(new(student));
+            if (form.ShowDialog() == true)
+            {
+                student.Update(form.NewStudent);
+            }
+        }
+
+        private void AnonymeStudent(object sender, RoutedEventArgs e)
+        {
+            Button button = (Button)sender;
+            var student = (Student)button.DataContext;
+            student.FirstName = "bruh";
+
+        }
     }
-
-    private void AddStudent(object sender, RoutedEventArgs e)
-    {
-      Student student = new();
-      StudentForm form = new StudentForm(student);
-      form.ShowDialog();
-
-      if (form.DialogResult == true)
-      {
-        Students.Add(student);
-      }
-    }
-
-    private void DeleteStudent(object sender, RoutedEventArgs e)
-    {
-      Button button = (Button)sender;
-      var student = (Student)button.DataContext;
-      Students.Remove(student);
-    }
-
-    private void EditStudent(object sender, RoutedEventArgs e)
-    {
-      Button button = (Button)sender;
-      var student = (Student)button.DataContext;
-
-      StudentForm form = new(student);
-      form.ShowDialog();
-    }
-
-    private void AnonymeStudent(object sender, RoutedEventArgs e)
-    {
-      Button button = (Button)sender;
-      var student = (Student)button.DataContext;
-      student.FirstName = "bruh";
-
-    }
-  }
 }

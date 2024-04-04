@@ -7,41 +7,44 @@
         mc:Ignorable="d"
         Title="EduGate" Height="450" Width="800">
     <Grid>
-    <Grid.ColumnDefinitions>
-      <ColumnDefinition Width="Auto"/>
-      <ColumnDefinition Width="Auto"/>
-    </Grid.ColumnDefinitions>
-    <Grid.RowDefinitions>
-      <RowDefinition Height="Auto"/>
-      <RowDefinition Height="Auto"/>
-    </Grid.RowDefinitions>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="Auto"/>
+            <ColumnDefinition Width="Auto"/>
+        </Grid.ColumnDefinitions>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="Auto"/>
+        </Grid.RowDefinitions>
 
 
-    <DataGrid ItemsSource="{Binding Students}" Grid.ColumnSpan="2" AutoGenerateColumns="False" CanUserAddRows="False">
-      <DataGrid.Columns>
-        <DataGridTextColumn Header="Jmeno" Binding="{Binding FirstName}"/>
-        <DataGridTextColumn Header="Vek" Binding="{Binding BirthDate}"/>
+        <DataGrid ItemsSource="{Binding Students}" Grid.ColumnSpan="2" AutoGenerateColumns="False" CanUserAddRows="False">
+            <DataGrid.Columns>
+                <DataGridTextColumn Header="Jméno" Binding="{Binding FirstName}"/>
+                <DataGridTextColumn Header="Príjmení" Binding="{Binding LastName}"/>
+                <DataGridTextColumn Header="Datum narození" Binding="{Binding BirthDate, StringFormat={}{0:dd.MM.yyyy}}"/>
+                <DataGridTextColumn Header="Adresa" Binding="{Binding Address}"/>
+                <DataGridTextColumn Header="Email" Binding="{Binding Email}"/>
+                <DataGridTextColumn Header="Telefon" Binding="{Binding Phone}"/>
 
-        <DataGridTemplateColumn>
-          <DataGridTemplateColumn.CellTemplate>
-            <DataTemplate>
-              <StackPanel Orientation="Horizontal">
-                <Button Content="Delete" Click="DeleteStudent"/>
-                <Button Content="Anonym" Click="AnonymeStudent"/>
-                <Button Content="Edit" Click="EditStudent"/>
-              </StackPanel>
-            </DataTemplate>
-          </DataGridTemplateColumn.CellTemplate>
-        </DataGridTemplateColumn>
+                <DataGridTemplateColumn>
+                    <DataGridTemplateColumn.CellTemplate>
+                        <DataTemplate>
+                            <StackPanel Orientation="Horizontal">
+                                <Button Content="Edit" Click="EditStudent"/>
+                                <Button Content="Delete" Click="DeleteStudent"/>
+                            </StackPanel>
+                        </DataTemplate>
+                    </DataGridTemplateColumn.CellTemplate>
+                </DataGridTemplateColumn>
 
-      </DataGrid.Columns>
-
-
-    </DataGrid>
-    <Button Click="AddStudent" Content="Add Student" Grid.Row="1" Grid.Column="1"/>
-   
+            </DataGrid.Columns>
 
 
+        </DataGrid>
+        <Button Click="AddStudent" Content="Add Student" Grid.Row="1" Grid.Column="1"/>
 
-  </Grid>
+
+
+
+    </Grid>
 </Window>
