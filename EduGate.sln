@@ -7,9 +7,7 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "TempApp", "TempApp\TempApp.
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Database", "Database\Database.csproj", "{567DD5D6-C357-4BC6-AAC7-A9FA5F3226D5}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "DesktopApp", "DesktopApp\DesktopApp.csproj", "{79066A32-8014-4557-B263-D01242CFD019}"
-EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "WebApp", "WebApp\WebApp.csproj", "{48D25D82-5E92-4C84-BD77-929AA9C41448}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "WebApp", "WebApp\WebApp.csproj", "{48D25D82-5E92-4C84-BD77-929AA9C41448}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -25,10 +23,6 @@ Global
 		{567DD5D6-C357-4BC6-AAC7-A9FA5F3226D5}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{567DD5D6-C357-4BC6-AAC7-A9FA5F3226D5}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{567DD5D6-C357-4BC6-AAC7-A9FA5F3226D5}.Release|Any CPU.Build.0 = Release|Any CPU
-		{79066A32-8014-4557-B263-D01242CFD019}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{79066A32-8014-4557-B263-D01242CFD019}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{79066A32-8014-4557-B263-D01242CFD019}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{79066A32-8014-4557-B263-D01242CFD019}.Release|Any CPU.Build.0 = Release|Any CPU
 		{48D25D82-5E92-4C84-BD77-929AA9C41448}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{48D25D82-5E92-4C84-BD77-929AA9C41448}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{48D25D82-5E92-4C84-BD77-929AA9C41448}.Release|Any CPU.ActiveCfg = Release|Any CPU

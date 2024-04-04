@@ -1,6 +1,7 @@
 ﻿using Database.Models;
 using Database.Repositories;
 using Database;
+using System.Xml;
 
 // this app is for testing purposes only !!!
 class Program
@@ -31,6 +32,10 @@ class Program
             {
                 Console.WriteLine(s.Name);
             }
+
+            XmlDocument xDoc = new();
+            xDoc.Load("Schools.xml");
+            xDoc.LoadXml(xDoc.InnerXml);
 
 
         }
