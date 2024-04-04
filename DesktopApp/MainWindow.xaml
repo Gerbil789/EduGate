@@ -3,86 +3,45 @@
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
-        xmlns:viewModel="clr-namespace:DesktopApp.MVVM.ViewModel"
         xmlns:local="clr-namespace:DesktopApp"
         mc:Ignorable="d"
-        Height="600" Width="920"
-        MinHeight="600" MinWidth="920"
-        WindowStyle="None"
-        ResizeMode="CanResizeWithGrip"
-        Background="Transparent"
-        AllowsTransparency="True">
-
-    <Window.DataContext>
-        <viewModel:MainViewModel/>
-    </Window.DataContext>
-
-
-
-    <Border Background="#272527" CornerRadius="10" 
-            MouseDown="Border_MouseDown">
-        <Grid>
-            <Grid.ColumnDefinitions>
-                <ColumnDefinition Width="200"/>
-                <ColumnDefinition Width="*"/>
-            </Grid.ColumnDefinitions>
-
-            <Grid.RowDefinitions>
-                <RowDefinition Height="75"/>
-                <RowDefinition Height="*"/>
-            </Grid.RowDefinitions>
+        Title="EduGate" Height="450" Width="800">
+    <Grid>
+    <Grid.ColumnDefinitions>
+      <ColumnDefinition Width="Auto"/>
+      <ColumnDefinition Width="Auto"/>
+    </Grid.ColumnDefinitions>
+    <Grid.RowDefinitions>
+      <RowDefinition Height="Auto"/>
+      <RowDefinition Height="Auto"/>
+    </Grid.RowDefinitions>
 
 
+    <DataGrid ItemsSource="{Binding Students}" Grid.ColumnSpan="2" AutoGenerateColumns="False" CanUserAddRows="False">
+      <DataGrid.Columns>
+        <DataGridTextColumn Header="Jmeno" Binding="{Binding FirstName}"/>
+        <DataGridTextColumn Header="Vek" Binding="{Binding BirthDate}"/>
 
-            <TextBlock Text="EduGate" 
-                VerticalAlignment="Center"
-                HorizontalAlignment="Center"
-                Foreground="White"
-                FontSize="28"/>
+        <DataGridTemplateColumn>
+          <DataGridTemplateColumn.CellTemplate>
+            <DataTemplate>
+              <StackPanel Orientation="Horizontal">
+                <Button Content="Delete" Click="DeleteStudent"/>
+                <Button Content="Anonym" Click="AnonymeStudent"/>
+                <Button Content="Edit" Click="EditStudent"/>
+              </StackPanel>
+            </DataTemplate>
+          </DataGridTemplateColumn.CellTemplate>
+        </DataGridTemplateColumn>
 
-            <StackPanel Grid.Row="1">
-                <RadioButton Content="Home"
-                    Height="50"
-                    Foreground="White"
-                    FontSize="14"
-                    Style="{StaticResource MenuButtonTheme}"
-                    IsChecked="True"
-                    Command="{Binding HomeViewCommand}"/>
-
-                <RadioButton Content="Schools"
-                    Height="50"
-                    Foreground="White"
-                    FontSize="14"
-                    Style="{StaticResource MenuButtonTheme}"
-                    Command="{Binding SchoolsViewCommand}"/>
-
-                <RadioButton Content="Students"
-                    Height="50"
-                    Foreground="White"
-                    FontSize="14"
-                    Style="{StaticResource MenuButtonTheme}"/>
-
-                <RadioButton Content="Applications"
-                    Height="50"
-                    Foreground="White"
-                    FontSize="14"
-                    Style="{StaticResource MenuButtonTheme}"/>
-            </StackPanel>
-
-            <ContentControl Grid.Row="1" 
-                            Grid.Column="1" 
-                            Margin="10"
-                            Content="{Binding CurrentView}">
-                
-            </ContentControl>
-            
-            
-           
-
-        </Grid>
-
-       
+      </DataGrid.Columns>
 
 
-    </Border>
+    </DataGrid>
+    <Button Click="AddStudent" Content="Add Student" Grid.Row="1" Grid.Column="1"/>
+   
+
+
+
+  </Grid>
 </Window>
