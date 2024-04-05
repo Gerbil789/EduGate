@@ -62,6 +62,8 @@ namespace DesktopApp
         private void AddStudent(object sender, RoutedEventArgs e)
         {
             StudentForm form = new();
+            form.Owner = this;
+            form.WindowStartupLocation = WindowStartupLocation.CenterOwner;
 
             if (form.ShowDialog() == true)
             {
@@ -82,6 +84,8 @@ namespace DesktopApp
             var student = (Student)button.DataContext;
 
             StudentForm form = new(new(student));
+            form.Owner = this;
+            form.WindowStartupLocation = WindowStartupLocation.CenterOwner;
             if (form.ShowDialog() == true)
             {
                 student.Update(form.NewStudent);

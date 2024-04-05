@@ -1,5 +1,6 @@
 ﻿using Database.Models;
 using System.Windows;
+using System.Windows.Controls;
 
 namespace DesktopApp
 {
@@ -24,8 +25,16 @@ namespace DesktopApp
 
         private void SaveStudent(object sender, RoutedEventArgs e)
         {
-            DialogResult = true;
-            this.Close();
+            ConfirmWindow confirm = new("Confirm changes");
+            confirm.Owner = this;
+            confirm.WindowStartupLocation = WindowStartupLocation.CenterOwner;
+            if (confirm.ShowDialog() == true)
+            {
+                DialogResult = true;
+                this.Close();
+            }
+
+           
         }
     }
 }

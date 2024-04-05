@@ -9,6 +9,16 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <None Remove="Img\vsb.ico" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Content Include="Img\vsb.ico">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+  </ItemGroup>
+
+  <ItemGroup>
     <ProjectReference Include="..\Database\Database.csproj" />
   </ItemGroup>
 

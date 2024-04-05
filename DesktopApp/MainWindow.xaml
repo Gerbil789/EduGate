@@ -6,12 +6,11 @@
         xmlns:local="clr-namespace:DesktopApp"
         mc:Ignorable="d"
         Title="EduGate" Height="720" Width="1080"
-        Icon="C:\Users\vojta\source\repos\EduGate\DesktopApp\Img\vsb.ico"
-        Background="#11AA99">
+        Icon="Img/vsb.ico">
 
     <TabControl>
         <TabItem Header="Students">
-            <Grid>
+            <Grid Background="#a0decf">
 
 
                 <Grid.ColumnDefinitions>
@@ -39,8 +38,8 @@
                             <DataGridTemplateColumn.CellTemplate>
                                 <DataTemplate>
                                     <StackPanel Orientation="Horizontal" HorizontalAlignment="Right">
-                                        <Button Content="Edit" Click="EditStudent" Margin="0 0 5 0" Width="50"/>
-                                        <Button Content="Delete" Click="DeleteStudent" Width="50"/>
+                                        <Button Content="Edit" Click="EditStudent" Margin="0 0 5 0" Width="50" Height="20"/>
+                                        <Button Content="Delete" Click="DeleteStudent" Width="50" Height="20"/>
                                     </StackPanel>
                                 </DataTemplate>
                             </DataGridTemplateColumn.CellTemplate>
