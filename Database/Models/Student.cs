@@ -9,6 +9,7 @@ namespace Database.Models
         public Student() 
         { 
             address = new Address();
+
         }
         public Student(Student other)
         {
@@ -48,7 +49,7 @@ namespace Database.Models
             set { Notify(ref lastName, value); }
         }
 
-        private DateTime birthDate;
+        private DateTime birthDate = new DateTime(2000, 1, 1);
         public DateTime BirthDate
         {
             get { return birthDate; }

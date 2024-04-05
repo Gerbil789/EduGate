@@ -1,5 +1,6 @@
 ﻿using Database.Models;
 using System.Collections.ObjectModel;
+using System.ComponentModel;
 using System.Text;
 using System.Windows;
 using System.Windows.Controls;
@@ -93,6 +94,34 @@ namespace DesktopApp
             var student = (Student)button.DataContext;
             student.FirstName = "bruh";
 
+        }
+
+        private void Search(object sender, TextChangedEventArgs e)
+        {
+            TextBox textBox = (TextBox)sender;
+            string searchTerm = textBox.Text.ToLower(); // Convert search term to lowercase for case-insensitive search
+
+            // Filter the Students collection based on the search term
+            ICollectionView view = CollectionViewSource.GetDefaultView(Students);
+            if (!string.IsNullOrWhiteSpace(searchTerm))
+            {
+                view.Filter = item =>
+                {
+                    Student student = (Student)item;
+                    return student != null && (student.FirstName.ToLower().Contains(searchTerm)
+                                            || student.LastName.ToLower().Contains(searchTerm)
+                                            || (student.Address != null && (student.Address.Street.ToLower().Contains(searchTerm)
+                                                                            || student.Address.City.ToLower().Contains(searchTerm)
+                                                                            || student.Address.State.ToLower().Contains(searchTerm)
+                                                                            || student.Address.ZipCode.ToLower().Contains(searchTerm)))
+                                            || (!string.IsNullOrEmpty(student.Email) && student.Email.ToLower().Contains(searchTerm))
+                                            || (!string.IsNullOrEmpty(student.Phone) && student.Phone.ToLower().Contains(searchTerm)));
+                };
+            }
+            else
+            {
+                view.Filter = null; // Remove any existing filter
+            }
         }
     }
 }

@@ -5,46 +5,60 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:DesktopApp"
         mc:Ignorable="d"
-        Title="EduGate" Height="450" Width="800">
-    <Grid>
-        <Grid.ColumnDefinitions>
-            <ColumnDefinition Width="Auto"/>
-            <ColumnDefinition Width="Auto"/>
-        </Grid.ColumnDefinitions>
-        <Grid.RowDefinitions>
-            <RowDefinition Height="Auto"/>
-            <RowDefinition Height="Auto"/>
-        </Grid.RowDefinitions>
+        Title="EduGate" Height="720" Width="1080"
+        Icon="C:\Users\vojta\source\repos\EduGate\DesktopApp\Img\vsb.ico"
+        Background="#11AA99">
+
+    <TabControl>
+        <TabItem Header="Students">
+            <Grid>
 
 
-        <DataGrid ItemsSource="{Binding Students}" Grid.ColumnSpan="2" AutoGenerateColumns="False" CanUserAddRows="False">
-            <DataGrid.Columns>
-                <DataGridTextColumn Header="Jméno" Binding="{Binding FirstName}"/>
-                <DataGridTextColumn Header="Príjmení" Binding="{Binding LastName}"/>
-                <DataGridTextColumn Header="Datum narození" Binding="{Binding BirthDate, StringFormat={}{0:dd.MM.yyyy}}"/>
-                <DataGridTextColumn Header="Adresa" Binding="{Binding Address}"/>
-                <DataGridTextColumn Header="Email" Binding="{Binding Email}"/>
-                <DataGridTextColumn Header="Telefon" Binding="{Binding Phone}"/>
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="*"/>
+                    <ColumnDefinition Width="300"/>
+                    <ColumnDefinition Width="*"/>
+                </Grid.ColumnDefinitions>
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="Auto"/>
+                    <RowDefinition Height="*"/>
+                </Grid.RowDefinitions>
 
-                <DataGridTemplateColumn>
-                    <DataGridTemplateColumn.CellTemplate>
-                        <DataTemplate>
-                            <StackPanel Orientation="Horizontal">
-                                <Button Content="Edit" Click="EditStudent"/>
-                                <Button Content="Delete" Click="DeleteStudent"/>
-                            </StackPanel>
-                        </DataTemplate>
-                    </DataGridTemplateColumn.CellTemplate>
-                </DataGridTemplateColumn>
+                <TextBox Grid.Row="0" Grid.Column="1" Margin="10" Width="200" TextChanged="Search"/>
+                <Button Click="AddStudent" Content="Add Student" Grid.Row="0" Grid.Column="2" Margin="10" Width="100" HorizontalAlignment="Right"/>
+                <DataGrid ItemsSource="{Binding Students}" Grid.ColumnSpan="3" Grid.Row="1" AutoGenerateColumns="False" CanUserAddRows="False">
+                    <DataGrid.Columns>
+                        <DataGridTextColumn Header="Jméno" Binding="{Binding FirstName}"/>
+                        <DataGridTextColumn Header="Príjmení" Binding="{Binding LastName}"/>
+                        <DataGridTextColumn Header="Datum narození" Binding="{Binding BirthDate, StringFormat={}{0:dd.MM.yyyy}}"/>
+                        <DataGridTextColumn Header="Adresa" Binding="{Binding Address}"/>
+                        <DataGridTextColumn Header="Email" Binding="{Binding Email}"/>
+                        <DataGridTextColumn Header="Telefon" Binding="{Binding Phone}" Width="*"/>
 
-            </DataGrid.Columns>
+                        <DataGridTemplateColumn Width="105">
+                            <DataGridTemplateColumn.CellTemplate>
+                                <DataTemplate>
+                                    <StackPanel Orientation="Horizontal" HorizontalAlignment="Right">
+                                        <Button Content="Edit" Click="EditStudent" Margin="0 0 5 0" Width="50"/>
+                                        <Button Content="Delete" Click="DeleteStudent" Width="50"/>
+                                    </StackPanel>
+                                </DataTemplate>
+                            </DataGridTemplateColumn.CellTemplate>
+                        </DataGridTemplateColumn>
+                    </DataGrid.Columns>
+                </DataGrid>
+            </Grid>
+        </TabItem>
+
+       
+
+        <TabItem Header="Applications">
+
+        </TabItem>
 
 
-        </DataGrid>
-        <Button Click="AddStudent" Content="Add Student" Grid.Row="1" Grid.Column="1"/>
+        <TabItem Header="Schools">
 
-
-
-
-    </Grid>
+        </TabItem>
+    </TabControl>
 </Window>
