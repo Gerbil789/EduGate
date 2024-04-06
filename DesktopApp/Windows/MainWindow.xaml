@@ -6,7 +6,7 @@
         xmlns:local="clr-namespace:DesktopApp"
         mc:Ignorable="d"
         Title="EduGate" Height="720" Width="1080"
-        Icon="Img/vsb.ico">
+        Icon="../Img/vsb.ico">
 
     <TabControl>
         <TabItem Header="Students" Width="100">
@@ -32,9 +32,9 @@
                         <DataGridTextColumn Header="Datum narození" Binding="{Binding BirthDate, StringFormat={}{0:dd.MM.yyyy}}"/>
                         <DataGridTextColumn Header="Adresa" Binding="{Binding Address}" CanUserSort="False"/>
                         <DataGridTextColumn Header="Email" Binding="{Binding Email}" CanUserSort="False"/>
-                        <DataGridTextColumn Header="Telefon" Binding="{Binding Phone}" Width="*" CanUserSort="False"/>
+                        <DataGridTextColumn Header="Telefon" Binding="{Binding Phone}" CanUserSort="False"/>
 
-                        <DataGridTemplateColumn Width="105">
+                        <DataGridTemplateColumn Width="*">
                             <DataGridTemplateColumn.CellTemplate>
                                 <DataTemplate>
                                     <StackPanel Orientation="Horizontal" HorizontalAlignment="Right">

@@ -1,4 +1,5 @@
 ﻿using System.ComponentModel;
+using System.ComponentModel.DataAnnotations;
 using System.Runtime.CompilerServices;
 
 namespace Database.Models
@@ -6,27 +7,6 @@ namespace Database.Models
     public class Student : INotifyPropertyChanged
     {
         public Student() { }
-        public Student(Student other)
-        {
-            StudentId = other.StudentId;
-            FirstName = other.FirstName;
-            LastName = other.LastName;
-            BirthDate = other.BirthDate;
-            Address = new (other.Address); 
-            Email = other.Email;
-            Phone = new (other.Phone);
-        }
-
-        public void Update(Student other)
-        {
-            StudentId = other.StudentId;
-            FirstName = other.FirstName;
-            LastName = other.LastName;
-            BirthDate = other.BirthDate;
-            Address = other.Address;
-            Email = other.Email;
-            Phone = other.Phone;
-        }
 
         public int StudentId{ get; set; }
 
@@ -72,16 +52,7 @@ namespace Database.Models
             set { SetProperty(ref phone, value); }
         }
 
-
-        //private void OnPropertyChanged<T>(ref T prop, T val, [CallerMemberName] string name = null)
-        //{
-        //    prop = val;
-        //    PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(name));
-        //}
-
         public event PropertyChangedEventHandler? PropertyChanged;
-
-
         protected virtual void OnPropertyChanged([CallerMemberName] string? propertyName = null)
         {
             PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
@@ -99,5 +70,8 @@ namespace Database.Models
         {
             return $"{FirstName} {LastName}";
         }
+
+        [ConcurrencyCheck]
+        public Guid Version { get; set; }
     }
 }

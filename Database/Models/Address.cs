@@ -15,29 +15,37 @@ namespace Database.Models
             State = other.State;
         }
 
-        public event PropertyChangedEventHandler? PropertyChanged;
-        public void Notify<T>(ref T field, T value, [CallerMemberName] string propertyName = "")
-        {
-            field = value;
-            PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
-        }
-
         public int AddressId { get; set; }
 
         private string city = string.Empty;
-        public string City { get { return city; } set { Notify(ref city, value); } }
+        public string City { get { return city; } set { SetProperty(ref city, value); } }
 
         private string street = string.Empty;
-        public string Street { get { return street; } set { Notify(ref street, value); } }
+        public string Street { get { return street; } set { SetProperty(ref street, value); } }
 
         private string number = string.Empty;
-        public string Number { get { return number; } set { Notify(ref number, value); } }
+        public string Number { get { return number; } set { SetProperty(ref number, value); } }
 
         private string zipCode = string.Empty;
-        public string ZipCode { get { return zipCode; } set { Notify(ref zipCode, value); } }
+        public string ZipCode { get { return zipCode; } set { SetProperty(ref zipCode, value); } }
 
         private string state = string.Empty;
-        public string State { get { return state; } set { Notify(ref state, value); } }
+        public string State { get { return state; } set { SetProperty(ref state, value); } }
+
+        public event PropertyChangedEventHandler? PropertyChanged;
+        protected virtual void OnPropertyChanged([CallerMemberName] string? propertyName = null)
+        {
+            PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
+        }
+
+        protected bool SetProperty<T>(ref T field, T value, [CallerMemberName] string? propertyName = null)
+        {
+            if (EqualityComparer<T>.Default.Equals(field, value)) return false;
+            field = value;
+            OnPropertyChanged(propertyName);
+            return true;
+        }
+
 
         public override string ToString()
         {

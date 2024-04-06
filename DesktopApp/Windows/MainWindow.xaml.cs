@@ -5,42 +5,23 @@ using System.Text;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Data;
-using System.Windows.Documents;
-using System.Windows.Input;
-using System.Windows.Media;
-using System.Windows.Media.Imaging;
-using System.Windows.Navigation;
-using System.Windows.Shapes;
+using Database.Repositories;
 
 namespace DesktopApp
 {
+
     public partial class MainWindow : Window
     {
+        private readonly DatabaseRepository repository;
+        public ObservableCollection<Student> Students { get; set; }
 
-        public ObservableCollection<Student> Students { get; set; } = new ObservableCollection<Student>
-        {
-            new Student
-            {
-                StudentId = 1,
-                FirstName = "Vojtěch",
-                LastName = "Rubeš",
-                BirthDate = new System.DateTime(2001, 11, 1),
-                Address = new Address
-                {
-                    Street = "Komenského",
-                    Number = "48",
-                    City = "Lhota u Opavy",
-                    State = "Česká Republika",
-                    ZipCode = "74792"
-                },
-                Email = "vojta.rubes.01@gmail.com",
-                Phone = new("+420", "603 197 038")
-            }
-        };
         public MainWindow()
         {
             InitializeComponent();
             this.DataContext = this;
+            repository = new DatabaseRepository();
+
+            Students = new ObservableCollection<Student>(repository.GetStudents());
         }
 
         private void AddStudent(object sender, RoutedEventArgs e)
@@ -51,7 +32,10 @@ namespace DesktopApp
 
             if (form.ShowDialog() == true)
             {
-                Students.Add(form.NewStudent);
+                if (repository.AddStudent(form.Student))
+                {
+                    Students.Add(form.Student);
+                }
             }
         }
 
@@ -59,7 +43,17 @@ namespace DesktopApp
         {
             Button button = (Button)sender;
             var student = (Student)button.DataContext;
-            Students.Remove(student);
+
+            ConfirmWindow confirm = new($"Delete student {student}");
+            confirm.Owner = this;
+            confirm.WindowStartupLocation = WindowStartupLocation.CenterOwner;
+            if (confirm.ShowDialog() == true)
+            {
+                if (repository.DeleteStudent(student))
+                {
+                    Students.Remove(student);
+                }
+            }
         }
 
         private void EditStudent(object sender, RoutedEventArgs e)
@@ -67,21 +61,24 @@ namespace DesktopApp
             Button button = (Button)sender;
             var student = (Student)button.DataContext;
 
-            StudentForm form = new(new(student));
+            StudentForm form = new(student);
             form.Owner = this;
             form.WindowStartupLocation = WindowStartupLocation.CenterOwner;
             if (form.ShowDialog() == true)
             {
-                student.Update(form.NewStudent);
+                if (repository.UpdateStudent(form.Student))
+                {
+
+                }
+                else
+                {
+                    NotificationWindow notification = new("Failed to update student");
+                    notification.Owner = this;
+                    notification.WindowStartupLocation = WindowStartupLocation.CenterOwner;
+                    notification.ShowDialog();
+                }
+
             }
-        }
-
-        private void AnonymeStudent(object sender, RoutedEventArgs e)
-        {
-            Button button = (Button)sender;
-            var student = (Student)button.DataContext;
-            student.FirstName = "bruh";
-
         }
 
         private void Search(object sender, TextChangedEventArgs e)

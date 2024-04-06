@@ -6,7 +6,7 @@
         xmlns:local="clr-namespace:DesktopApp"
         mc:Ignorable="d"
         Height="160" Width="300" ResizeMode="NoResize"
-        Icon="Img/vsb.ico">
+        Icon="../Img/vsb.ico">
     <Grid>
         <Grid.ColumnDefinitions>
             <ColumnDefinition Width="*"/>

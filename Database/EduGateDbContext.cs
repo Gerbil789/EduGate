@@ -22,7 +22,10 @@ namespace Database
         
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {
-            optionsBuilder.UseSqlite(@"Data Source=EduGate.db");
+            //string relativePath = @"..\Database\EduGate.db";
+            //string currentDirectory = Directory.GetCurrentDirectory();
+            //string absolutePath = Path.GetFullPath(Path.Combine(currentDirectory, relativePath));
+            optionsBuilder.UseSqlite(@"Data Source=C:\Users\vojta\source\repos\EduGate\Database\EduGate.db");
         }
     }
 }

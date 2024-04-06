@@ -22,6 +22,7 @@ namespace Database.Models
             Code = other.Code;
             Number = other.Number;
         }
+
         public int PhoneId { get; set; }
 
         private string code = string.Empty;

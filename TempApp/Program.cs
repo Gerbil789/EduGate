@@ -4,7 +4,7 @@ class Program
 {
     static void Main()
     {
-        var schoolRepository = new SchoolRepository();
+        var schoolRepository = new DatabaseRepository();
 
         try
         {

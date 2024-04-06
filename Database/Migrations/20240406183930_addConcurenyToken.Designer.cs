@@ -11,8 +11,8 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace Database.Migrations
 {
     [DbContext(typeof(EduGateDbContext))]
-    [Migration("20240406145825_initialCreate")]
-    partial class initialCreate
+    [Migration("20240406183930_addConcurenyToken")]
+    partial class addConcurenyToken
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -138,6 +138,10 @@ namespace Database.Migrations
 
                     b.Property<int>("PhoneId")
                         .HasColumnType("INTEGER");
+
+                    b.Property<Guid>("Version")
+                        .IsConcurrencyToken()
+                        .HasColumnType("TEXT");
 
                     b.HasKey("StudentId");
 
