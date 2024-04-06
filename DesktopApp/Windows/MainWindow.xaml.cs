@@ -14,17 +14,23 @@ namespace DesktopApp
     {
         private readonly DatabaseRepository repository;
         public ObservableCollection<Student> Students { get; set; }
-
+        public ObservableCollection<School> Schools { get; set; }
         public MainWindow()
         {
             InitializeComponent();
             this.DataContext = this;
             repository = new DatabaseRepository();
 
-            Students = new ObservableCollection<Student>(repository.GetStudents());
+            Initialize().Wait();
         }
 
-        private void AddStudent(object sender, RoutedEventArgs e)
+        async Task Initialize()
+        {
+            Students = new ObservableCollection<Student>(await repository.GetStudents());
+            Schools = new ObservableCollection<School>(await repository.GetSchools());
+        }
+
+        private async void AddStudent(object sender, RoutedEventArgs e)
         {
             StudentForm form = new();
             form.Owner = this;
@@ -32,14 +38,14 @@ namespace DesktopApp
 
             if (form.ShowDialog() == true)
             {
-                if (repository.AddStudent(form.Student))
+                if (await repository.AddStudent(form.Student))
                 {
                     Students.Add(form.Student);
                 }
             }
         }
 
-        private void DeleteStudent(object sender, RoutedEventArgs e)
+        private async void DeleteStudent(object sender, RoutedEventArgs e)
         {
             Button button = (Button)sender;
             var student = (Student)button.DataContext;
@@ -49,14 +55,14 @@ namespace DesktopApp
             confirm.WindowStartupLocation = WindowStartupLocation.CenterOwner;
             if (confirm.ShowDialog() == true)
             {
-                if (repository.DeleteStudent(student))
+                if (await repository.DeleteStudent(student))
                 {
                     Students.Remove(student);
                 }
             }
         }
 
-        private void EditStudent(object sender, RoutedEventArgs e)
+        private async void EditStudent(object sender, RoutedEventArgs e)
         {
             Button button = (Button)sender;
             var student = (Student)button.DataContext;
@@ -66,7 +72,7 @@ namespace DesktopApp
             form.WindowStartupLocation = WindowStartupLocation.CenterOwner;
             if (form.ShowDialog() == true)
             {
-                if (repository.UpdateStudent(form.Student))
+                if (await repository.UpdateStudent(form.Student))
                 {
 
                 }

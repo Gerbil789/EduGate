@@ -25,33 +25,33 @@ class Program
             //    Phone = new("+420", "603 197 038")
             //};
 
-            var student = new Student
-            {
-                FirstName = "Viktorie",
-                LastName = "Nováková",
-                BirthDate = new System.DateTime(2002, 12, 1),
-                Address = new Address
-                {
-                    Street = "U Lesa",
-                    Number = "69",
-                    City = "Lhota u Opavy",
-                    State = "Česká Republika",
-                    ZipCode = "74792"
-                },
-                Email = "myemail.01@gmail.com",
-                Phone = new("+420", "603 775 444")
-            };
+            //var student = new Student
+            //{
+            //    FirstName = "Viktorie",
+            //    LastName = "Nováková",
+            //    BirthDate = new System.DateTime(2002, 12, 1),
+            //    Address = new Address
+            //    {
+            //        Street = "U Lesa",
+            //        Number = "69",
+            //        City = "Lhota u Opavy",
+            //        State = "Česká Republika",
+            //        ZipCode = "74792"
+            //    },
+            //    Email = "myemail.01@gmail.com",
+            //    Phone = new("+420", "603 775 444")
+            //};
 
 
 
-            schoolRepository.AddStudent(student);
+            //schoolRepository.AddStudent(student);
 
-            Console.WriteLine("All students in the database:");
-            var students = schoolRepository.GetStudents();
-            foreach (var s in students)
-            {
-                Console.WriteLine(s);
-            }
+            //Console.WriteLine("All students in the database:");
+            //var students = schoolRepository.GetStudents();
+            //foreach (var s in students)
+            //{
+            //    Console.WriteLine(s);
+            //}
 
 
             //var school = new School
@@ -69,13 +69,13 @@ class Program
 
             //schoolRepository.AddSchool(school);
 
-            var schools = schoolRepository.GetAllSchools();
+            //var schools = schoolRepository.GetAllSchools();
 
-            Console.WriteLine("All schools in the database:");
-            foreach (var s in schools)
-            {
-                Console.WriteLine(s.Name);
-            }
+            //Console.WriteLine("All schools in the database:");
+            //foreach (var s in schools)
+            //{
+            //    Console.WriteLine(s.Name);
+            //}
         }
         catch (Exception e)
         {

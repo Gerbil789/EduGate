@@ -10,23 +10,20 @@ namespace Database.Repositories
         {
             dbContext = new EduGateDbContext();
         }
-
-        public IEnumerable<Student> GetStudents()
+        public async Task<IEnumerable<Student>> GetStudents()
         {
-            return dbContext.Students.Include(x => x.Address).Include(x => x.Phone).ToList();
+            return await dbContext.Students.Include(x => x.Address).Include(x => x.Phone).ToListAsync();
         }
-
-        public bool AddStudent(Student student)
+        public async Task<bool> AddStudent(Student student)
         {
-            dbContext.Students.Add(student);
-            return dbContext.SaveChanges() > 0;
+            await dbContext.Students.AddAsync(student);
+            return await dbContext.SaveChangesAsync() > 0;
         }
-
-        public bool UpdateStudent(Student modifiedStudent)
+        public async Task<bool> UpdateStudent(Student modifiedStudent)
         {
             try
             {
-                var student = dbContext.Students.Include(x => x.Address).Include(x => x.Phone).FirstOrDefault(x => x.StudentId == modifiedStudent.StudentId);
+                var student = await dbContext.Students.Include(x => x.Address).Include(x => x.Phone).FirstOrDefaultAsync(x => x.StudentId == modifiedStudent.StudentId);
                 if (student == null)
                 {
                     return false;
@@ -46,53 +43,28 @@ namespace Database.Repositories
                 student.Phone.Code = modifiedStudent.Phone.Code;
                 student.Phone.Number = modifiedStudent.Phone.Number;
 
-                dbContext.SaveChanges();
+                await dbContext.SaveChangesAsync();
                 return true;
             }
-            catch (DbUpdateConcurrencyException)
+            catch (Exception e)
             {
                 return false;
             }
         }
-
-        public bool DeleteStudent(Student student)
+        public async Task<bool> DeleteStudent(Student student)
         {
             dbContext.Students.Remove(student);
-            return dbContext.SaveChanges() > 0;
+            return await dbContext.SaveChangesAsync() > 0;
         }
-
-        public bool AddSchool(School school)
+        public async Task<IEnumerable<School>> GetSchools()
         {
-            dbContext.Schools.Add(school);
-            return dbContext.SaveChanges() > 0;
+            return await dbContext.Schools.Include(x => x.Address).ToListAsync();
         }
-
-        public IEnumerable<School> GetAllSchools()
+        public async Task<bool> AddSchool(School school)
         {
-            return dbContext.Schools;
+            await dbContext.Schools.AddAsync(school);
+            return await dbContext.SaveChangesAsync() > 0;
         }
-
-        public void UpdateSchool(School school)
-        {
-            dbContext.Schools.Update(school);
-            dbContext.SaveChanges();
-        }
-
-        public void DeleteSchool(School school)
-        {
-            dbContext.Schools.Remove(school);
-            dbContext.SaveChanges();
-        }
-
-        public void AddPhone(Phone phone)
-        {
-            dbContext.Phones.Add(phone);
-            dbContext.SaveChanges();
-        }
-
-        public List<Phone> GetPhones()
-        {
-            return dbContext.Phones.ToList();
-        }
+      
     }
 }
