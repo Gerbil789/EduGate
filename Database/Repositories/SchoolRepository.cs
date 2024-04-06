@@ -4,10 +4,21 @@ namespace Database.Repositories
 {
     public class SchoolRepository
     {
-        private readonly SchoolDbContext dbContext;
+        private readonly EduGateDbContext dbContext;
         public SchoolRepository()
         {
-            dbContext = new SchoolDbContext();
+            dbContext = new EduGateDbContext();
+        }
+
+        public IEnumerable<Student> GetStudents()
+        {
+            return dbContext.Students;
+        }
+
+        public void AddStudent(Student student)
+        {
+            dbContext.Students.Add(student);
+            dbContext.SaveChanges();
         }
 
         public void AddSchool(School school)
@@ -31,6 +42,17 @@ namespace Database.Repositories
         {
             dbContext.Schools.Remove(school);
             dbContext.SaveChanges();
+        }
+
+        public void AddPhone(Phone phone)
+        {
+            dbContext.Phones.Add(phone);
+            dbContext.SaveChanges();
+        }
+
+        public List<Phone> GetPhones()
+        {
+            return dbContext.Phones.ToList();
         }
     }
 }

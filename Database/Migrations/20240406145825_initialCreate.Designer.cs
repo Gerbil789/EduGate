@@ -10,9 +10,9 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 namespace Database.Migrations
 {
-    [DbContext(typeof(SchoolDbContext))]
-    [Migration("20240222182938_AddressTable")]
-    partial class AddressTable
+    [DbContext(typeof(EduGateDbContext))]
+    [Migration("20240406145825_initialCreate")]
+    partial class initialCreate
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -30,11 +30,11 @@ namespace Database.Migrations
                         .IsRequired()
                         .HasColumnType("TEXT");
 
-                    b.Property<string>("Country")
+                    b.Property<string>("Number")
                         .IsRequired()
                         .HasColumnType("TEXT");
 
-                    b.Property<string>("Number")
+                    b.Property<string>("State")
                         .IsRequired()
                         .HasColumnType("TEXT");
 
@@ -48,13 +48,16 @@ namespace Database.Migrations
 
                     b.HasKey("AddressId");
 
-                    b.ToTable("Address");
+                    b.ToTable("Addresses");
                 });
 
             modelBuilder.Entity("Database.Models.Application", b =>
                 {
                     b.Property<int>("ApplicationId")
                         .ValueGeneratedOnAdd()
+                        .HasColumnType("INTEGER");
+
+                    b.Property<bool>("IsAccepted")
                         .HasColumnType("INTEGER");
 
                     b.Property<int>("StudentId")
@@ -70,21 +73,41 @@ namespace Database.Migrations
                     b.ToTable("Applications");
                 });
 
+            modelBuilder.Entity("Database.Models.Phone", b =>
+                {
+                    b.Property<int>("PhoneId")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("INTEGER");
+
+                    b.Property<string>("Code")
+                        .IsRequired()
+                        .HasColumnType("TEXT");
+
+                    b.Property<string>("Number")
+                        .IsRequired()
+                        .HasColumnType("TEXT");
+
+                    b.HasKey("PhoneId");
+
+                    b.ToTable("Phones");
+                });
+
             modelBuilder.Entity("Database.Models.School", b =>
                 {
                     b.Property<int>("SchoolId")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("INTEGER");
 
-                    b.Property<string>("Address")
-                        .IsRequired()
-                        .HasColumnType("TEXT");
+                    b.Property<int>("AddressId")
+                        .HasColumnType("INTEGER");
 
                     b.Property<string>("Name")
                         .IsRequired()
                         .HasColumnType("TEXT");
 
                     b.HasKey("SchoolId");
+
+                    b.HasIndex("AddressId");
 
                     b.ToTable("Schools");
                 });
@@ -101,10 +124,6 @@ namespace Database.Migrations
                     b.Property<DateTime>("BirthDate")
                         .HasColumnType("TEXT");
 
-                    b.Property<string>("BirthPlace")
-                        .IsRequired()
-                        .HasColumnType("TEXT");
-
                     b.Property<string>("Email")
                         .IsRequired()
                         .HasColumnType("TEXT");
@@ -117,13 +136,14 @@ namespace Database.Migrations
                         .IsRequired()
                         .HasColumnType("TEXT");
 
-                    b.Property<string>("Phone")
-                        .IsRequired()
-                        .HasColumnType("TEXT");
+                    b.Property<int>("PhoneId")
+                        .HasColumnType("INTEGER");
 
                     b.HasKey("StudentId");
 
                     b.HasIndex("AddressId");
+
+                    b.HasIndex("PhoneId");
 
                     b.ToTable("Students");
                 });
@@ -175,7 +195,7 @@ namespace Database.Migrations
                     b.Navigation("Student");
                 });
 
-            modelBuilder.Entity("Database.Models.Student", b =>
+            modelBuilder.Entity("Database.Models.School", b =>
                 {
                     b.HasOne("Database.Models.Address", "Address")
                         .WithMany()
@@ -184,6 +204,25 @@ namespace Database.Migrations
                         .IsRequired();
 
                     b.Navigation("Address");
+                });
+
+            modelBuilder.Entity("Database.Models.Student", b =>
+                {
+                    b.HasOne("Database.Models.Address", "Address")
+                        .WithMany()
+                        .HasForeignKey("AddressId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.HasOne("Database.Models.Phone", "Phone")
+                        .WithMany()
+                        .HasForeignKey("PhoneId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("Address");
+
+                    b.Navigation("Phone");
                 });
 
             modelBuilder.Entity("Database.Models.StudyProgram", b =>

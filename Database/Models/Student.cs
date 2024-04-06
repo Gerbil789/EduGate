@@ -1,16 +1,11 @@
 ﻿using System.ComponentModel;
 using System.Runtime.CompilerServices;
-using System.Xml.Linq;
 
 namespace Database.Models
 {
     public class Student : INotifyPropertyChanged
     {
-        public Student() 
-        { 
-            address = new Address();
-
-        }
+        public Student() { }
         public Student(Student other)
         {
             StudentId = other.StudentId;
@@ -19,7 +14,7 @@ namespace Database.Models
             BirthDate = other.BirthDate;
             Address = new (other.Address); 
             Email = other.Email;
-            Phone = other.Phone;
+            Phone = new (other.Phone);
         }
 
         public void Update(Student other)
@@ -28,62 +23,81 @@ namespace Database.Models
             FirstName = other.FirstName;
             LastName = other.LastName;
             BirthDate = other.BirthDate;
-            Address = new(other.Address);
+            Address = other.Address;
             Email = other.Email;
             Phone = other.Phone;
         }
 
         public int StudentId{ get; set; }
 
-        private string firstName;
+        private string firstName = string.Empty;
         public string FirstName
         {
             get { return firstName; }
-            set { Notify(ref firstName, value); }
+            set { SetProperty(ref firstName, value); }
         }
 
-        private string lastName;
+        private string lastName = string.Empty;
         public string LastName
         {
             get { return lastName; }
-            set { Notify(ref lastName, value); }
+            set { SetProperty(ref lastName, value); }
         }
 
         private DateTime birthDate = new DateTime(2000, 1, 1);
         public DateTime BirthDate
         {
             get { return birthDate; }
-            set { Notify(ref birthDate, value); }
+            set { SetProperty(ref birthDate, value); }
         }
 
-        private Address address;
+        private Address address = new();
         public Address Address
         {
             get { return address; }
-            set { Notify(ref address, value); }
+            set { SetProperty(ref address, value); }
         }
 
-        private string email;
+        private string email = string.Empty;
         public string Email
         {
             get { return email; }
-            set { Notify(ref email, value); }
+            set { SetProperty(ref email, value); }
         }
 
-        private string phone;
-        public string Phone
+        private Phone phone = new();
+        public Phone Phone
         {
             get { return phone; }
-            set { Notify(ref phone, value); }
+            set { SetProperty(ref phone, value); }
         }
-        
 
-        private void Notify<T>(ref T prop, T val, [CallerMemberName] string name = null)
-        {
-            prop = val;
-            PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(name));
-        }
+
+        //private void OnPropertyChanged<T>(ref T prop, T val, [CallerMemberName] string name = null)
+        //{
+        //    prop = val;
+        //    PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(name));
+        //}
 
         public event PropertyChangedEventHandler? PropertyChanged;
+
+
+        protected virtual void OnPropertyChanged([CallerMemberName] string? propertyName = null)
+        {
+            PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
+        }
+
+        protected bool SetProperty<T>(ref T field, T value, [CallerMemberName] string? propertyName = null)
+        {
+            if (EqualityComparer<T>.Default.Equals(field, value)) return false;
+            field = value;
+            OnPropertyChanged(propertyName);
+            return true;
+        }
+
+        public override string ToString()
+        {
+            return $"{FirstName} {LastName}";
+        }
     }
 }

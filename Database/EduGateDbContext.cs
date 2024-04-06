@@ -11,16 +11,18 @@ using Microsoft.EntityFrameworkCore;
 
 namespace Database
 {
-    public class SchoolDbContext : DbContext
+    public class EduGateDbContext : DbContext
     {
+        public DbSet<Address> Addresses { get; set; }
+        public DbSet<Phone> Phones { get; set; }
         public DbSet<School> Schools { get; set; }
         public DbSet<Student> Students { get; set; }
         public DbSet<StudyProgram> StudyPrograms { get; set; }
         public DbSet<Application> Applications { get; set; }
-
+        
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {
-            optionsBuilder.UseSqlite("Data Source=school.db");
+            optionsBuilder.UseSqlite(@"Data Source=EduGate.db");
         }
     }
 }

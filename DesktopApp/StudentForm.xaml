@@ -48,7 +48,8 @@
                 <Label Content="Email:"></Label>
                 <TextBox Text="{Binding Email}" Width="250"></TextBox>
                 <Label Content="Telefon:"></Label>
-                <TextBox Text="{Binding Phone}" Width="250"></TextBox>
+                <TextBox Text="{Binding Phone.Code}" Width="50" Margin="0 0 5 0"></TextBox>
+                <TextBox Text="{Binding Phone.Number}" Width="200"></TextBox>
             </DockPanel>
         </StackPanel>
         <Button Content="Uložit" Margin="10" Click="SaveStudent" Width="100" VerticalAlignment="Bottom"></Button>
