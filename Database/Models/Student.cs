@@ -70,8 +70,5 @@ namespace Database.Models
         {
             return $"{FirstName} {LastName}";
         }
-
-        [ConcurrencyCheck]
-        public Guid Version { get; set; }
     }
 }

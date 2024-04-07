@@ -12,25 +12,16 @@ using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Shapes;
 
-namespace DesktopApp
+namespace DesktopApp.Windows
 {
-    public partial class ConfirmWindow : Window
+    /// <summary>
+    /// Interaction logic for SchoolForm.xaml
+    /// </summary>
+    public partial class SchoolForm : Window
     {
-        public ConfirmWindow(string message)
+        public SchoolForm()
         {
             InitializeComponent();
-            MessageLabel.Content = message;
-        }
-
-        private void Confirm(object sender, RoutedEventArgs e)
-        {
-            DialogResult = true;
-            this.Close();
-        }
-
-        private void Cancel(object sender, RoutedEventArgs e)
-        {
-            this.Close();
         }
     }
 }

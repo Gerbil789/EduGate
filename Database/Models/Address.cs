@@ -46,7 +46,6 @@ namespace Database.Models
             return true;
         }
 
-
         public override string ToString()
         {
             return $"{Street} {Number}, {City}, {State}, {ZipCode}";

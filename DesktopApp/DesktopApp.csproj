@@ -23,9 +23,7 @@
   </ItemGroup>
 
   <ItemGroup>
-    <Compile Update="Windows\NotificationWindow.xaml.cs">
-      <SubType>Code</SubType>
-    </Compile>
+    <Folder Include="Utilities\" />
   </ItemGroup>
 
 </Project>

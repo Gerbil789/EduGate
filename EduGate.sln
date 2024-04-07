@@ -3,11 +3,9 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 17
 VisualStudioVersion = 17.8.34330.188
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "TempApp", "TempApp\TempApp.csproj", "{1C22BED8-488D-4B4D-932F-9B7A9F877D01}"
-EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Database", "Database\Database.csproj", "{567DD5D6-C357-4BC6-AAC7-A9FA5F3226D5}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DesktopApp", "DesktopApp\DesktopApp.csproj", "{EAA154D9-1717-4948-9154-37DDB9FDA91D}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "DesktopApp", "DesktopApp\DesktopApp.csproj", "{EAA154D9-1717-4948-9154-37DDB9FDA91D}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -15,10 +13,6 @@ Global
 		Release|Any CPU = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(ProjectConfigurationPlatforms) = postSolution
-		{1C22BED8-488D-4B4D-932F-9B7A9F877D01}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{1C22BED8-488D-4B4D-932F-9B7A9F877D01}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{1C22BED8-488D-4B4D-932F-9B7A9F877D01}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{1C22BED8-488D-4B4D-932F-9B7A9F877D01}.Release|Any CPU.Build.0 = Release|Any CPU
 		{567DD5D6-C357-4BC6-AAC7-A9FA5F3226D5}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{567DD5D6-C357-4BC6-AAC7-A9FA5F3226D5}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{567DD5D6-C357-4BC6-AAC7-A9FA5F3226D5}.Release|Any CPU.ActiveCfg = Release|Any CPU

@@ -2,7 +2,7 @@
 using System.Windows;
 using System.Windows.Controls;
 
-namespace DesktopApp
+namespace DesktopApp.Windows
 {
     public partial class StudentForm : Window
     {
@@ -17,6 +17,7 @@ namespace DesktopApp
             if (student != null)
             {
                 Title = "Edit student";
+                ConfirmButton.Content = "Uložit";
                 Student.StudentId = student.StudentId;
                 Student.FirstName = student.FirstName;
                 Student.LastName = student.LastName;
@@ -29,10 +30,12 @@ namespace DesktopApp
                 Student.Email = student.Email;
                 Student.Phone.Code = student.Phone.Code;
                 Student.Phone.Number = student.Phone.Number;
+
             }
             else
             {
                 Title = "Add student";
+                ConfirmButton.Content = "Přidat";
             }
 
            
@@ -41,19 +44,8 @@ namespace DesktopApp
 
         private void SaveStudent(object sender, RoutedEventArgs e)
         {
-            //ConfirmWindow confirm = new("Confirm changes");
-            //confirm.Owner = this;
-            //confirm.WindowStartupLocation = WindowStartupLocation.CenterOwner;
-            //if (confirm.ShowDialog() == true)
-            //{
-            //    DialogResult = true;
-            //    this.Close();
-            //}
-
             DialogResult = true;
             this.Close();
-
-
         }
     }
 }
