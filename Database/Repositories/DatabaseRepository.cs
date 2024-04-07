@@ -124,6 +124,21 @@ namespace Database.Repositories
                 school.Address.City = modifiedSchool.Address.City;
                 school.Address.State = modifiedSchool.Address.State;
                 school.Address.ZipCode = modifiedSchool.Address.ZipCode;
+                school.StudyPrograms = modifiedSchool.StudyPrograms;
+
+                //foreach (var studyProgram in modifiedSchool.StudyPrograms)
+                //{
+                //    if (school.StudyPrograms.Any(x => x.StudyProgramId == studyProgram.StudyProgramId))
+                //    {
+                //        var studyProgramToUpdate = school.StudyPrograms.First(x => x.StudyProgramId == studyProgram.StudyProgramId);
+                //        studyProgramToUpdate.Name = studyProgram.Name;
+                //        studyProgramToUpdate.Description = studyProgram.Description;
+                //    }
+                //    else
+                //    {
+                //        school.StudyPrograms.Add(studyProgram);
+                //    }
+                //}
 
                 await dbContext.SaveChangesAsync();
                 return true;

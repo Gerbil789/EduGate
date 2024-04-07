@@ -1,13 +1,41 @@
 ﻿
+using System.Collections.Specialized;
+using System.ComponentModel;
+using System.Runtime.CompilerServices;
+
 namespace Database.Models
 {
-    public class StudyProgram
+    public class StudyProgram : INotifyPropertyChanged
     {
         public int StudyProgramId { get; set; }
-        public School School { get; set; } = new();
-        public string Name { get; set; } = string.Empty;
-        public string Identifier { get; set; } = string.Empty;
-        public string Description { get; set; } = string.Empty;
-        public int AvailableSeats { get; set; }
+        private string name = string.Empty;
+        public string Name { get { return name; } set { SetProperty(ref name, value); } }
+        private string identifier = string.Empty;
+        public string Identifier { get { return identifier; } set { SetProperty(ref identifier, value); } }
+
+        private string description = string.Empty;
+        public string Description { get { return description; } set { SetProperty(ref description, value); } }
+
+        private int availableSeats;
+        public int AvailableSeats { get { return availableSeats; } set { SetProperty(ref availableSeats, value); } }
+
+        public event PropertyChangedEventHandler? PropertyChanged;
+        protected virtual void OnPropertyChanged([CallerMemberName] string? propertyName = null)
+        {
+            PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
+        }
+
+        protected bool SetProperty<T>(ref T field, T value, [CallerMemberName] string? propertyName = null)
+        {
+            if (EqualityComparer<T>.Default.Equals(field, value)) return false;
+            field = value;
+            OnPropertyChanged(propertyName);
+            return true;
+        }
+
+        public override string ToString()
+        {
+            return $"{Identifier}";
+        }
     }
 }

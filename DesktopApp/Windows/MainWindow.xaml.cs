@@ -157,10 +157,54 @@ namespace DesktopApp.Windows
 
             try
             {
-                //if (await repository.AddSchool(form.School))
-                //{
-                //    Schools.Add(form.School);
-                //}
+                if (await repository.AddSchool(form.School))
+                {
+                    Schools.Add(form.School);
+                }
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show(ex.Message, "Error", MessageBoxButton.OK, MessageBoxImage.Error);
+            }
+        }
+
+        private async void EditSchool(object sender, RoutedEventArgs e)
+        {
+            Button button = (Button)sender;
+            var school = (School)button.DataContext;
+
+            SchoolForm form = new(school);
+            form.Owner = this;
+            form.WindowStartupLocation = WindowStartupLocation.CenterOwner;
+
+            if (form.ShowDialog() == false) return;
+
+            try
+            {
+                await repository.UpdateSchool(form.School);
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show(ex.Message, "Error", MessageBoxButton.OK, MessageBoxImage.Error);
+            }
+        }
+
+        private async void DeleteSchool(object sender, RoutedEventArgs e)
+        {
+            Button button = (Button)sender;
+            var school = (School)button.DataContext;
+
+            if (MessageBox.Show($"Odstranit {school}?", "School", MessageBoxButton.OKCancel, MessageBoxImage.Warning) != MessageBoxResult.OK)
+            {
+                return;
+            }
+
+            try
+            {
+                if (await repository.DeleteSchool(school))
+                {
+                    Schools.Remove(school);
+                }
             }
             catch (Exception ex)
             {

@@ -5,65 +5,62 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:DesktopApp.Windows"
         mc:Ignorable="d"
-        Title="School" Height="450" Width="800" Icon="../Img/vsb.ico">
+        Title="School" Height="450" Width="800" Icon="../Img/vsb.ico" ResizeMode="NoResize">
     <Grid>
         <Grid.RowDefinitions>
             <RowDefinition Height="Auto"/>
             <RowDefinition Height="Auto"/>
             <RowDefinition Height="Auto"/>
-            <RowDefinition Height="Auto"/>
+
             <RowDefinition Height="*"/>
             <RowDefinition Height="Auto"/>
         </Grid.RowDefinitions>
 
 
         <StackPanel Grid.Row="0" Margin="5">
-            <Label FontSize="16">Name:</Label>
-            <TextBox Width="400" HorizontalAlignment="Left"/>
+            <Label>Název:</Label>
+            <TextBox Text="{Binding Name}" Width="370" HorizontalAlignment="Left"/>
         </StackPanel>
 
-        <Label Grid.Row="1" Margin="5" FontSize="16">Address</Label>
-        
-        <DockPanel Grid.Row="2">
+        <DockPanel Grid.Row="1">
             <StackPanel Margin="5">
-                <Label>State:</Label>
-                <TextBox Width="150"/>
+                <Label>Stát:</Label>
+                <TextBox Text="{Binding Address.State}" Width="180"/>
             </StackPanel>
 
             <StackPanel Margin="5">
-                <Label>City:</Label>
-                <TextBox Width="150"/>
+                <Label>Město:</Label>
+                <TextBox Text="{Binding Address.City}" Width="180"/>
             </StackPanel>
 
             <StackPanel Margin="5">
-                <Label>Street:</Label>
-                <TextBox Width="180"/>
+                <Label>Ulice:</Label>
+                <TextBox Text="{Binding Address.Street}" Width="180"/>
             </StackPanel>
 
             <StackPanel Margin="5">
-                <Label>Number:</Label>
-                <TextBox Width="50"/>
+                <Label>Číslo popisné:</Label>
+                <TextBox Text="{Binding Address.Number}" Width="80"/>
             </StackPanel>
 
-            <StackPanel Margin="5">
-                <Label>Zip:</Label>
-                <TextBox Width="80" HorizontalAlignment="Left"/>
+            <StackPanel Margin="5" Width="80" HorizontalAlignment="Left">
+                <Label>PSČ:</Label>
+                <TextBox Text="{Binding Address.ZipCode}" />
             </StackPanel>
-
         </DockPanel>
 
-        <DockPanel Grid.Row="3" Margin="5">
-            <Label FontSize="16">Study programs</Label>
-            <Button Content="Add Program" Width="100" HorizontalAlignment="Right" Margin="5" Height="20"/>
+        <DockPanel Grid.Row="2" Margin="5 0 0 0">
+            <Label FontSize="14" Padding="5">Studijní obory</Label>
+            <Button Content="Přidat obor" Width="100" HorizontalAlignment="Right" Margin="5" Click="AddProgram"/>
         </DockPanel>
        
 
-        <DataGrid ItemsSource="{Binding Schools}" Grid.Row="4" AutoGenerateColumns="False" CanUserAddRows="False" IsReadOnly="True" Margin="5">
+        <DataGrid ItemsSource="{Binding StudyPrograms}" Grid.Row="3" AutoGenerateColumns="False" CanUserAddRows="False" IsReadOnly="True" Margin="5">
             <DataGrid.Columns>
-                <DataGridTextColumn Header="Kód" Binding="{Binding Name}"/>
-                <DataGridTextColumn Header="Název" Binding="{Binding Address}"/>
-                <DataGridTextColumn Header="Počet míst" Binding="{Binding Address}" />
-                <DataGridTextColumn Header="Popis" Binding="{Binding Address}" CanUserSort="False"/>
+                <DataGridTextColumn Header="Kód" Binding="{Binding Identification}"/>
+                <DataGridTextColumn Header="Název" Binding="{Binding Name}"/>
+                <DataGridTextColumn Header="Počet míst" Binding="{Binding AvalableSeats}" />
+                <DataGridTextColumn Header="Popis" Binding="{Binding Description}" CanUserSort="False"/>
 
                 <DataGridTemplateColumn Width="*">
                     <DataGridTemplateColumn.CellTemplate>
@@ -77,6 +74,6 @@
                 </DataGridTemplateColumn>
             </DataGrid.Columns>
         </DataGrid>
-        <Button Grid.Row="5" Content="Save" Width="100" HorizontalAlignment="Right" Margin="5"/>
+        <Button x:Name="ConfirmButton" Grid.Row="4" Content="Save" Width="100" HorizontalAlignment="Right" Margin="5" Click="Save"/>
     </Grid>
 </Window>

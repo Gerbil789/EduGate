@@ -1,13 +1,10 @@
 ﻿using System.ComponentModel;
-using System.ComponentModel.DataAnnotations;
 using System.Runtime.CompilerServices;
 
 namespace Database.Models
 {
     public class Student : INotifyPropertyChanged
     {
-        public Student() { }
-
         public int StudentId{ get; set; }
 
         private string firstName = string.Empty;

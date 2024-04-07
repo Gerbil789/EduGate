@@ -5,16 +5,6 @@ namespace Database.Models
 {
     public class Address : INotifyPropertyChanged
     {
-        public Address() { }
-        public Address(Address other)
-        {
-            City = other.City;
-            Street = other.Street;
-            Number = other.Number;
-            ZipCode = other.ZipCode;
-            State = other.State;
-        }
-
         public int AddressId { get; set; }
 
         private string city = string.Empty;
