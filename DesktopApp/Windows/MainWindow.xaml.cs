@@ -170,18 +170,20 @@ namespace DesktopApp.Windows
 
         private async void EditSchool(object sender, RoutedEventArgs e)
         {
-            Button button = (Button)sender;
-            var school = (School)button.DataContext;
-
-            SchoolForm form = new(school);
-            form.Owner = this;
-            form.WindowStartupLocation = WindowStartupLocation.CenterOwner;
-
-            if (form.ShowDialog() == false) return;
-
             try
             {
-                await repository.UpdateSchool(form.School);
+                Button button = (Button)sender;
+                var school = (School)button.DataContext;
+
+                SchoolForm form = new(school);
+                form.Owner = this;
+                form.WindowStartupLocation = WindowStartupLocation.CenterOwner;
+
+                if (form.ShowDialog() == false) return;
+
+
+
+                school = await repository.UpdateSchool(form.School);
             }
             catch (Exception ex)
             {

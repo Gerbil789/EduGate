@@ -53,13 +53,13 @@
             <Label FontSize="14" Padding="5">Studijní obory</Label>
             <Button Content="Přidat obor" Width="100" HorizontalAlignment="Right" Margin="5" Click="AddProgram"/>
         </DockPanel>
-       
+
 
         <DataGrid ItemsSource="{Binding StudyPrograms}" Grid.Row="3" AutoGenerateColumns="False" CanUserAddRows="False" IsReadOnly="True" Margin="5">
             <DataGrid.Columns>
-                <DataGridTextColumn Header="Kód" Binding="{Binding Identification}"/>
+                <DataGridTextColumn Header="Kód" Binding="{Binding Identifier}"/>
                 <DataGridTextColumn Header="Název" Binding="{Binding Name}"/>
-                <DataGridTextColumn Header="Počet míst" Binding="{Binding AvalableSeats}" />
+                <DataGridTextColumn Header="Počet míst" Binding="{Binding AvailableSeats}" />
                 <DataGridTextColumn Header="Popis" Binding="{Binding Description}" CanUserSort="False"/>
 
                 <DataGridTemplateColumn Width="*">

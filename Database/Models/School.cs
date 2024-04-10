@@ -1,4 +1,5 @@
 ﻿
+using System.Collections.ObjectModel;
 using System.ComponentModel;
 using System.Runtime.CompilerServices;
 
@@ -12,8 +13,8 @@ namespace Database.Models
         private Address address = new();
         public Address Address { get { return address; } set { SetProperty(ref address, value); } }
 
-        private List<StudyProgram> studyPrograms = new();
-        public List<StudyProgram> StudyPrograms { get { return studyPrograms; } set { SetProperty(ref studyPrograms, value); } }
+        private ObservableCollection<StudyProgram> studyPrograms = new();
+        public ObservableCollection<StudyProgram> StudyPrograms { get { return studyPrograms; } set { SetProperty(ref studyPrograms, value); } }
 
         public event PropertyChangedEventHandler? PropertyChanged;
         protected virtual void OnPropertyChanged([CallerMemberName] string? propertyName = null)

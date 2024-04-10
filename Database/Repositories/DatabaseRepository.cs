@@ -107,41 +107,39 @@ namespace Database.Repositories
          
           
         }
-        public async Task<bool> UpdateSchool(School modifiedSchool)
+        public async Task<School> UpdateSchool(School school)
         {
             try
             {
-                var school = await dbContext.Schools.Include(x => x.Address).FirstOrDefaultAsync(x => x.SchoolId == modifiedSchool.SchoolId);
-                if (school == null)
+                var existingSchool = await dbContext.Schools.Include(x => x.Address).FirstOrDefaultAsync(x => x.SchoolId == school.SchoolId);
+                if (existingSchool == null)
                 {
-                    throw new Exception($"School {modifiedSchool.Name} not found in database");
+                    throw new Exception($"School {school.Name} not found in database");
                 }
 
-                school.Name = modifiedSchool.Name;
-                school.Address = modifiedSchool.Address;
-                school.Address.Number = modifiedSchool.Address.Number;
-                school.Address.Street = modifiedSchool.Address.Street;
-                school.Address.City = modifiedSchool.Address.City;
-                school.Address.State = modifiedSchool.Address.State;
-                school.Address.ZipCode = modifiedSchool.Address.ZipCode;
-                school.StudyPrograms = modifiedSchool.StudyPrograms;
+                existingSchool.Name = school.Name;
+                existingSchool.Address = school.Address;
+                existingSchool.Address.Number = school.Address.Number;
+                existingSchool.Address.Street = school.Address.Street;
+                existingSchool.Address.City = school.Address.City;
+                existingSchool.Address.State = school.Address.State;
+                existingSchool.Address.ZipCode = school.Address.ZipCode;
 
-                //foreach (var studyProgram in modifiedSchool.StudyPrograms)
-                //{
-                //    if (school.StudyPrograms.Any(x => x.StudyProgramId == studyProgram.StudyProgramId))
-                //    {
-                //        var studyProgramToUpdate = school.StudyPrograms.First(x => x.StudyProgramId == studyProgram.StudyProgramId);
-                //        studyProgramToUpdate.Name = studyProgram.Name;
-                //        studyProgramToUpdate.Description = studyProgram.Description;
-                //    }
-                //    else
-                //    {
-                //        school.StudyPrograms.Add(studyProgram);
-                //    }
-                //}
+                existingSchool.StudyPrograms.Clear();
+
+                foreach (var studyProgram in school.StudyPrograms)
+                {
+                    dbContext.StudyPrograms.Remove(studyProgram);
+                }
+
+                foreach (var studyProgram in school.StudyPrograms)
+                {
+                    dbContext.StudyPrograms.Add(studyProgram);
+                    existingSchool.StudyPrograms.Add(studyProgram);
+                }
 
                 await dbContext.SaveChangesAsync();
-                return true;
+                return existingSchool;
             }
             catch (Exception e)
             {
@@ -161,5 +159,6 @@ namespace Database.Repositories
             }
             
         }
+
     }
 }

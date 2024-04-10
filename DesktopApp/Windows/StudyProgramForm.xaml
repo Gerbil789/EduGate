@@ -14,19 +14,16 @@
         </Grid.RowDefinitions>
 
         <DockPanel Grid.Row="0" Margin="5 0 0 0">
-            <StackPanel Margin="0 0 5 0" Width="80">
-                <Label Content="Kód:"></Label>
-                <Label Content="{Binding Identifier, FallbackValue='0123456789'}" Width="Auto" Background="LightBlue" Padding="5 0"></Label>
-            </StackPanel>
 
-            <StackPanel Margin="5 0">
+
+            <StackPanel Margin="0 0 5 0">
                 <Label Content="Název:" Width="auto"></Label>
                 <TextBox Text="{Binding Name}" Width="250" HorizontalAlignment="Left"></TextBox>
             </StackPanel>
 
             <StackPanel Margin="5 0" Width="80" HorizontalAlignment="Left">
                 <Label Content="Počet míst:"></Label>
-                <TextBox Text="{Binding AvaliableSeats}" Width="80" HorizontalAlignment="Left"></TextBox>
+                <TextBox Text="{Binding AvailableSeats}" Width="80" HorizontalAlignment="Left"></TextBox>
             </StackPanel>
         </DockPanel>
 
@@ -36,8 +33,6 @@
             <TextBox Text="{Binding Description}" TextWrapping="Wrap" AcceptsReturn="True" VerticalAlignment="Stretch" Background="WhiteSmoke" MinHeight="200"/>
         </StackPanel>
       
-
-
 
         <Button x:Name="ConfirmButton" Grid.Row="5" Content="Uložit" Margin="5" Click="Save"  Width="100" HorizontalAlignment="Right" VerticalAlignment="Bottom"></Button>
     </Grid>
