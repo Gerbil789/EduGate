@@ -127,6 +127,7 @@ namespace Database.Repositories
 
                 existingSchool.StudyPrograms.Clear();
 
+
                 foreach (var studyProgram in school.StudyPrograms)
                 {
                     dbContext.StudyPrograms.Remove(studyProgram);
