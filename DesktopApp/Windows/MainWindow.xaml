@@ -9,8 +9,27 @@
         Icon="../Img/vsb.ico">
 
     <TabControl x:Name="Tabs">
+        <TabItem Header="Home" Width="100" Tag="applications">
+            <Grid>
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="auto"/>
+                    
+                    <RowDefinition Height="*"/>
+                </Grid.RowDefinitions>
+
+                <Grid.Background>
+   
+                    <ImageBrush ImageSource="..\Img\database_diagram.png" Stretch="Uniform"/>
+                </Grid.Background>
+                <Label Margin="20 20" FontSize="32" FontWeight="DemiBold" Foreground="#0ec2ac">EduGate Administration</Label>
+            
+
+
+                <Label Grid.Row="1" Margin="0 0 0 20" FontSize="18" HorizontalAlignment="Center" VerticalAlignment="Bottom" Foreground="Gray">https://github.com/Gerbil789/EduGate</Label>
+            </Grid>
+        </TabItem>
         <TabItem Header="Students" Width="100" Tag="students">
-            <Grid Background="#a0decf">
+            <Grid Background="#0ec2ac">
 
 
                 <Grid.ColumnDefinitions>
@@ -50,7 +69,7 @@
         </TabItem>
 
         <TabItem Header="Schools" Width="100" Tag="schools">
-            <Grid Background="#a0decf">
+            <Grid Background="#0ec2ac">
                 <Grid.ColumnDefinitions>
                     <ColumnDefinition Width="*"/>
                     <ColumnDefinition Width="300"/>
@@ -90,9 +109,7 @@
             </Grid>
         </TabItem>
 
-        <TabItem Header="Applications" Width="100" Tag="applications">
-
-        </TabItem>
+       
 
 
        

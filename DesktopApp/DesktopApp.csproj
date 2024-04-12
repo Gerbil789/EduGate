@@ -9,10 +9,14 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <None Remove="Img\database_diagram.png" />
     <None Remove="Img\vsb.ico" />
   </ItemGroup>
 
   <ItemGroup>
+    <Content Include="Img\database_diagram.png">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
     <Content Include="Img\vsb.ico">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
