@@ -15,6 +15,7 @@ namespace Database.Models
 
         private ObservableCollection<StudyProgram> studyPrograms = new();
         public ObservableCollection<StudyProgram> StudyPrograms { get { return studyPrograms; } set { SetProperty(ref studyPrograms, value); } }
+        public string StudyProgramsString => string.Join(", ", StudyPrograms.Select(x => x.Identifier));
 
         public event PropertyChangedEventHandler? PropertyChanged;
         protected virtual void OnPropertyChanged([CallerMemberName] string? propertyName = null)

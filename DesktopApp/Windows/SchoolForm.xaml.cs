@@ -1,5 +1,7 @@
 ﻿using Database.Models;
+using Database.Repositories;
 using System.Windows;
+using System.Windows.Controls;
 
 namespace DesktopApp.Windows
 {
@@ -66,6 +68,52 @@ namespace DesktopApp.Windows
 
             DialogResult = true;
             this.Close();
+        }
+
+        private void EditStudyProgram(object sender, RoutedEventArgs e)
+        {
+            try
+            {
+                Button button = (Button)sender;
+                var program = (StudyProgram)button.DataContext;
+
+                var form = new StudyProgramForm(program);
+                form.Owner = this;
+                form.WindowStartupLocation = WindowStartupLocation.CenterOwner;
+
+                if (form.ShowDialog() == false) return;
+
+                program.Name = form.StudyProgram.Name;
+                program.Description = form.StudyProgram.Description;
+                program.Identifier = form.StudyProgram.Identifier;
+                program.AvailableSeats = form.StudyProgram.AvailableSeats;
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show(ex.Message, "Error", MessageBoxButton.OK, MessageBoxImage.Error);
+            }
+        }
+
+        private void DeleteStudyProgram(object sender, RoutedEventArgs e)
+        {
+            
+
+            try
+            {
+                Button button = (Button)sender;
+                var program = (StudyProgram)button.DataContext;
+
+                if (MessageBox.Show($"Odstranit {program}?", "Study program", MessageBoxButton.OKCancel, MessageBoxImage.Warning) != MessageBoxResult.OK)
+                {
+                    return;
+                }
+
+                this.School.StudyPrograms.Remove(program);
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show(ex.Message, "Error", MessageBoxButton.OK, MessageBoxImage.Error);
+            }
         }
     }
 }

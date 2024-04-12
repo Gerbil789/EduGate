@@ -181,9 +181,9 @@ namespace DesktopApp.Windows
 
                 if (form.ShowDialog() == false) return;
 
-
-
-                school = await repository.UpdateSchool(form.School);
+                var updatedSchool = await repository.UpdateSchool(form.School);
+                Schools[Schools.IndexOf(school)] = updatedSchool;
+                
             }
             catch (Exception ex)
             {

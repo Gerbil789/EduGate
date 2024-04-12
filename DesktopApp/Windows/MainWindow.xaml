@@ -67,7 +67,14 @@
                     <DataGrid.Columns>
                         <DataGridTextColumn Header="Název" Binding="{Binding Name}"/>
                         <DataGridTextColumn Header="Adresa" Binding="{Binding Address}" CanUserSort="False"/>
-                     
+                        <DataGridTemplateColumn Header="Studijní programy" CanUserSort="False">
+                            <DataGridTemplateColumn.CellTemplate>
+                                <DataTemplate>
+                                    <TextBlock Text="{Binding StudyProgramsString}"/>
+                                </DataTemplate>
+                            </DataGridTemplateColumn.CellTemplate>
+                        </DataGridTemplateColumn>
+
                         <DataGridTemplateColumn Width="*">
                             <DataGridTemplateColumn.CellTemplate>
                                 <DataTemplate>

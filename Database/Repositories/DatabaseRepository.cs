@@ -86,7 +86,7 @@ namespace Database.Repositories
         {
             try
             {
-                return await dbContext.Schools.Include(x => x.Address).ToListAsync();
+                return await dbContext.Schools.Include(x => x.Address).Include(x => x.StudyPrograms).ToListAsync();
             }
             catch (Exception e)
             {
@@ -111,7 +111,7 @@ namespace Database.Repositories
         {
             try
             {
-                var existingSchool = await dbContext.Schools.Include(x => x.Address).FirstOrDefaultAsync(x => x.SchoolId == school.SchoolId);
+                var existingSchool = await dbContext.Schools.Include(x => x.Address).Include(x => x.StudyPrograms).FirstOrDefaultAsync(x => x.SchoolId == school.SchoolId);
                 if (existingSchool == null)
                 {
                     throw new Exception($"School {school.Name} not found in database");
@@ -125,22 +125,36 @@ namespace Database.Repositories
                 existingSchool.Address.State = school.Address.State;
                 existingSchool.Address.ZipCode = school.Address.ZipCode;
 
-                existingSchool.StudyPrograms.Clear();
-
-
-                foreach (var studyProgram in school.StudyPrograms)
+                foreach (var updatedStudyProgram in school.StudyPrograms)
                 {
-                    dbContext.StudyPrograms.Remove(studyProgram);
+                    var existingStudyProgram = existingSchool.StudyPrograms.FirstOrDefault(sp => sp.StudyProgramId == updatedStudyProgram.StudyProgramId);
+
+                    if (existingStudyProgram != null)
+                    {
+                        // Update existing study program properties
+                        existingStudyProgram.Name = updatedStudyProgram.Name;
+                        existingStudyProgram.Description = updatedStudyProgram.Description;
+                        existingStudyProgram.Identifier = updatedStudyProgram.Identifier;
+                        existingStudyProgram.AvailableSeats = updatedStudyProgram.AvailableSeats;
+                    }
+                    else
+                    {
+                        // Add the new study program to the existing school
+                        existingSchool.StudyPrograms.Add(updatedStudyProgram);
+                    }
                 }
 
-                foreach (var studyProgram in school.StudyPrograms)
+                foreach (var existingStudyProgram in existingSchool.StudyPrograms.ToList())
                 {
-                    dbContext.StudyPrograms.Add(studyProgram);
-                    existingSchool.StudyPrograms.Add(studyProgram);
+                    if (!school.StudyPrograms.Any(sp => sp.StudyProgramId == existingStudyProgram.StudyProgramId))
+                    {
+                        existingSchool.StudyPrograms.Remove(existingStudyProgram);
+                    }
                 }
+
 
                 await dbContext.SaveChangesAsync();
-                return existingSchool;
+                return school;
             }
             catch (Exception e)
             {

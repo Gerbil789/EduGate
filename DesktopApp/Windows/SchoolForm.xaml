@@ -66,8 +66,8 @@
                     <DataGridTemplateColumn.CellTemplate>
                         <DataTemplate>
                             <StackPanel Orientation="Horizontal" HorizontalAlignment="Right">
-                                <Button Content="Edit"  Margin="0 0 5 0" Width="50"/>
-                                <Button Content="Delete"  Width="50"/>
+                                <Button Content="Edit"  Margin="0 0 5 0" Width="50" Click="EditStudyProgram"/>
+                                <Button Content="Delete"  Width="50" Click="DeleteStudyProgram"/>
                             </StackPanel>
                         </DataTemplate>
                     </DataGridTemplateColumn.CellTemplate>
