@@ -13,84 +13,92 @@
             <local:Converter x:Key="myConv" />
         </ResourceDictionary>
     </Window.Resources>
-    <Grid>
+    <Grid Margin="5">
         <Grid.RowDefinitions>
             <RowDefinition Height="Auto"></RowDefinition>
             <RowDefinition Height="Auto"></RowDefinition>
             <RowDefinition Height="Auto"></RowDefinition>
             <RowDefinition Height="Auto"></RowDefinition>
             <RowDefinition Height="Auto"></RowDefinition>
+            <RowDefinition Height="Auto"></RowDefinition>
+            <RowDefinition Height="Auto"></RowDefinition>
+            <RowDefinition Height="Auto"></RowDefinition>
             <RowDefinition Height="*"></RowDefinition>
+            <RowDefinition Height="Auto"></RowDefinition>
         </Grid.RowDefinitions>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="220"></ColumnDefinition>
+            <ColumnDefinition Width="220"></ColumnDefinition>
+            <ColumnDefinition Width="150"></ColumnDefinition>
+            <ColumnDefinition Width="80"></ColumnDefinition>
+            <ColumnDefinition Width="*"></ColumnDefinition>
+        </Grid.ColumnDefinitions>
 
-        <DockPanel Grid.Row="0" Margin="5 0 0 0">
-            <StackPanel Margin="5 0">
-                <Label Content="Jméno:" Width="Auto"></Label>
-                <TextBox Text="{Binding FirstName}" Width="250" AutoWordSelection="True"></TextBox>
-            </StackPanel>
+        <Label Content="Jméno:" Grid.Row="0" Grid.Column="0"></Label>
+        <TextBox Text="{Binding FirstName}" AutoWordSelection="True" Grid.Row="1" Grid.Column="0" Margin="5 0"></TextBox>
 
-            <StackPanel Margin="5 0">
-                <Label Content="Příjmení:" Width="auto"></Label>
-                <TextBox Text="{Binding LastName}" Width="250" HorizontalAlignment="Left"></TextBox>
-            </StackPanel>
 
-            <StackPanel Margin="5 0" Width="140" HorizontalAlignment="Left">
-                <Label Content="Datum narození:"></Label>
-                <DatePicker SelectedDate="{Binding BirthDate}" Height="18" FontSize="11" Padding="-10"></DatePicker>
-            </StackPanel>
+        <Label Content="Příjmení:" Grid.Row="0" Grid.Column="1"></Label>
+        <TextBox Text="{Binding LastName}" Grid.Row="1" Grid.Column="1" Margin="5 0"></TextBox>
+
+        <Label Content="Datum narození:" Grid.Row="0" Grid.Column="2"></Label>
+        <DatePicker SelectedDate="{Binding BirthDate}" Height="18" FontSize="11" Padding="-10" Grid.Row="1" Grid.Column="2" Margin="5 0"></DatePicker>
+
+
+        <Label Content="Město:" Grid.Row="2" Grid.Column="0"></Label>
+        <TextBox Text="{Binding Address.City}" Grid.Row="3" Grid.Column="0" Margin="5 0"></TextBox>
+
+
+
+        <Label Content="Ulice:" Grid.Row="2" Grid.Column="1"></Label>
+        <TextBox Text="{Binding Address.Street}" Grid.Row="3" Grid.Column="1" Margin="5 0"></TextBox>
+
+
+
+        <Label Content="Číslo popisné:" Grid.Row="2" Grid.Column="2"></Label>
+        <TextBox Text="{Binding Address.Number}"  Grid.Row="3" Grid.Column="2" Margin="5 0" Width="50" HorizontalAlignment="Left"></TextBox>
+
+
+        <Label Content="Stát:" Grid.Row="4" Grid.Column="0"></Label>
+        <TextBox Text="{Binding Address.State}" Grid.Row="5" Grid.Column="0" Margin="5 0"></TextBox>
+
+
+
+        <Label Content="PSČ:" Grid.Row="4" Grid.Column="1"></Label>
+        <TextBox Text="{Binding Address.ZipCode}" Grid.Row="5" Grid.Column="1" Margin="5 0" Width="80" HorizontalAlignment="Left"></TextBox>
+
+        <Label Content="Email:" Grid.Row="6" Grid.Column="0"></Label>
+        <TextBox Text="{Binding Email}" Grid.Row="7" Grid.Column="0" Margin="5 0"></TextBox>
+
+        <Label Content="Telefon:" Grid.Row="6" Grid.Column="1"></Label>
+        <DockPanel Grid.Row="7" Grid.Column="1" Margin="5 0">
+            <TextBox Text="{Binding Phone.Code}" Width="50" Margin="0 0 5 0"></TextBox>
+            <TextBox Text="{Binding Phone.Number}" ></TextBox>
         </DockPanel>
 
 
-        <Label Grid.Row="1" Margin="10 0 0 0" Content="Adresa" HorizontalAlignment="Left" FontSize="16"></Label>
+        <Button Grid.Row="7" Grid.Column="2" Grid.ColumnSpan="3" Content="Přidat přihlášku" Margin="5 0" Click="AddApplication" Width="100" HorizontalAlignment="Right" VerticalAlignment="Bottom"></Button>
+        <DataGrid Grid.Row="8" Grid.Column="0" Grid.ColumnSpan="5" Margin="5" ItemsSource="{Binding Applications}" AutoGenerateColumns="False" CanUserAddRows="False" IsReadOnly="True">
+            <DataGrid.Columns>
+                <DataGridTextColumn Header="Studijní obor" Binding="{Binding StudyProgram}"/>
+                <DataGridTextColumn Header="Škola" Binding="{Binding StudyProgram}"/>
+                <DataGridTextColumn Header="Datum podání" Binding="{Binding SubmissionDate, StringFormat={}{0:dd.MM.yyyy}}"/>
 
-        <StackPanel Grid.Row="2" Margin="5 0 0 5">
-            <DockPanel>
-                <StackPanel Margin="5 0">
-                    <Label>Město:</Label>
-                    <TextBox Text="{Binding Address.City}" Width="250"></TextBox>
-                </StackPanel>
+                <DataGridTemplateColumn Width="*">
+                    <DataGridTemplateColumn.CellTemplate>
+                        <DataTemplate>
+                            <StackPanel Orientation="Horizontal" HorizontalAlignment="Right">
+                                <Button Content="Edit" Click="EditApplication" Margin="0 0 5 0" Width="50"/>
+                                <Button Content="Delete" Click="DeleteApplication" Width="50"/>
+                            </StackPanel>
+                        </DataTemplate>
+                    </DataGridTemplateColumn.CellTemplate>
+                </DataGridTemplateColumn>
+            </DataGrid.Columns>
+            
+        </DataGrid>
 
-                <StackPanel Margin="5 0">
-                    <Label>Ulice:</Label>
-                    <TextBox Text="{Binding Address.Street}" Width="250"></TextBox>
-                </StackPanel>
 
-                <StackPanel Margin="5 0" Width="80" HorizontalAlignment="Left">
-                    <Label>Číslo popisné:</Label>
-                    <TextBox Text="{Binding Address.Number}" Width="80" ></TextBox>
-                </StackPanel>
-            </DockPanel>
-            <DockPanel>
-                <StackPanel Margin="5 0">
-                    <Label>Stát:</Label>
-                    <TextBox Text="{Binding Address.State}" Width="150"></TextBox>
-                </StackPanel>
-
-                <StackPanel Margin="5 0" Width="90" HorizontalAlignment="Left">
-                    <Label>PSČ:</Label>
-                    <TextBox Text="{Binding Address.ZipCode}"></TextBox>
-                </StackPanel>
-
-            </DockPanel>
-        </StackPanel>
-
-        <Label Grid.Row="3" Margin="10 0 0 0" Content="Kontakt" HorizontalAlignment="Left" FontSize="16"></Label>
-
-        <DockPanel Grid.Row="4" Margin="5 0">
-            <StackPanel Margin="5 0" HorizontalAlignment="Left">
-                <Label Content="Email:"></Label>
-                <TextBox Text="{Binding Email}" Width="250"></TextBox>
-            </StackPanel>
-            <StackPanel Margin="5 0" HorizontalAlignment="Left">
-                <Label Content="Telefon:"></Label>
-                <DockPanel>
-                    <TextBox Text="{Binding Phone.Code}" Width="50" Margin="0 0 5 0"></TextBox>
-                    <TextBox Text="{Binding Phone.Number}" Width="150"></TextBox>
-                </DockPanel>
-            </StackPanel>
-        </DockPanel>
-
-       
-        <Button x:Name="ConfirmButton" Grid.Row="5" Content="Uložit" Margin="5" Click="SaveStudent" Width="100" HorizontalAlignment="Right" VerticalAlignment="Bottom"></Button>
+        <Button x:Name="ConfirmButton" Grid.Row="9" Grid.Column="2" Grid.ColumnSpan="3" Content="Uložit" Margin="5" Click="SaveStudent" Width="100" HorizontalAlignment="Right" VerticalAlignment="Bottom"></Button>
     </Grid>
 </Window>

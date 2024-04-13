@@ -47,5 +47,25 @@ namespace DesktopApp.Windows
             DialogResult = true;
             this.Close();
         }
+
+        private void TextBox_PreviewTextInput(object sender, System.Windows.Input.TextCompositionEventArgs e)
+        {
+
+        }
+
+        private void AddApplication(object sender, RoutedEventArgs e)
+        {
+
+        }
+
+        private void EditApplication(object sender, RoutedEventArgs e)
+        {
+
+        }
+
+        private void DeleteApplication(object sender, RoutedEventArgs e)
+        {
+
+        }
     }
 }

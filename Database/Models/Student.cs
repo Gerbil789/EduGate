@@ -1,53 +1,33 @@
-﻿using System.ComponentModel;
+﻿using System.Collections.ObjectModel;
+using System.ComponentModel;
 using System.Runtime.CompilerServices;
 
 namespace Database.Models
 {
     public class Student : INotifyPropertyChanged
     {
-        public int StudentId{ get; set; }
+        public int StudentId { get; set; }
 
         private string firstName = string.Empty;
-        public string FirstName
-        {
-            get { return firstName; }
-            set { SetProperty(ref firstName, value); }
-        }
+        public string FirstName { get { return firstName; } set { SetProperty(ref firstName, value); } }
 
         private string lastName = string.Empty;
-        public string LastName
-        {
-            get { return lastName; }
-            set { SetProperty(ref lastName, value); }
-        }
+        public string LastName { get { return lastName; } set { SetProperty(ref lastName, value); } }
 
         private DateTime birthDate = new DateTime(2000, 1, 1);
-        public DateTime BirthDate
-        {
-            get { return birthDate; }
-            set { SetProperty(ref birthDate, value); }
-        }
+        public DateTime BirthDate { get { return birthDate; } set { SetProperty(ref birthDate, value); } }
 
         private Address address = new();
-        public Address Address
-        {
-            get { return address; }
-            set { SetProperty(ref address, value); }
-        }
+        public Address Address { get { return address; } set { SetProperty(ref address, value); } }
 
         private string email = string.Empty;
-        public string Email
-        {
-            get { return email; }
-            set { SetProperty(ref email, value); }
-        }
+        public string Email { get { return email; } set { SetProperty(ref email, value); } }
 
         private Phone phone = new();
-        public Phone Phone
-        {
-            get { return phone; }
-            set { SetProperty(ref phone, value); }
-        }
+        public Phone Phone { get { return phone; } set { SetProperty(ref phone, value); } }
+
+        private ObservableCollection<Application> applications = new();
+        public ObservableCollection<Application> Applications { get { return applications; } set { SetProperty(ref applications, value); } }
 
         public event PropertyChangedEventHandler? PropertyChanged;
         protected virtual void OnPropertyChanged([CallerMemberName] string? propertyName = null)

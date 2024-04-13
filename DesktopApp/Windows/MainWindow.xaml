@@ -28,7 +28,7 @@
                 <Label Grid.Row="1" Margin="0 0 0 20" FontSize="18" HorizontalAlignment="Center" VerticalAlignment="Bottom" Foreground="Gray">https://github.com/Gerbil789/EduGate</Label>
             </Grid>
         </TabItem>
-        <TabItem Header="Students" Width="100" Tag="students">
+        <TabItem Header="Students" Width="100" Tag="students" IsSelected="True">
             <Grid Background="#0ec2ac">
 
 
@@ -52,6 +52,7 @@
                         <DataGridTextColumn Header="Adresa" Binding="{Binding Address}" CanUserSort="False"/>
                         <DataGridTextColumn Header="Email" Binding="{Binding Email}" CanUserSort="False"/>
                         <DataGridTextColumn Header="Telefon" Binding="{Binding Phone}" CanUserSort="False"/>
+                        <DataGridTextColumn Header="Přihlášky" Binding="{Binding Applications.Count, StringFormat={}{0}/3}" CanUserSort="False"/>
 
                         <DataGridTemplateColumn Width="*">
                             <DataGridTemplateColumn.CellTemplate>
