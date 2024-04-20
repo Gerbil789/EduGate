@@ -23,6 +23,11 @@
             <RowDefinition Height="Auto"></RowDefinition>
             <RowDefinition Height="Auto"></RowDefinition>
             <RowDefinition Height="Auto"></RowDefinition>
+            <RowDefinition Height="Auto"></RowDefinition>
+            <RowDefinition Height="Auto"></RowDefinition>
+            <RowDefinition Height="Auto"></RowDefinition>
+            <RowDefinition Height="Auto"></RowDefinition>
+            <RowDefinition Height="Auto"></RowDefinition>
             <RowDefinition Height="*"></RowDefinition>
             <RowDefinition Height="Auto"></RowDefinition>
         </Grid.RowDefinitions>
@@ -77,28 +82,23 @@
         </DockPanel>
 
 
-        <Button Grid.Row="7" Grid.Column="2" Grid.ColumnSpan="3" Content="Přidat přihlášku" Margin="5 0" Click="AddApplication" Width="100" HorizontalAlignment="Right" VerticalAlignment="Bottom"></Button>
-        <DataGrid Grid.Row="8" Grid.Column="0" Grid.ColumnSpan="5" Margin="5" ItemsSource="{Binding Applications}" AutoGenerateColumns="False" CanUserAddRows="False" IsReadOnly="True">
-            <DataGrid.Columns>
-                <DataGridTextColumn Header="Studijní obor" Binding="{Binding StudyProgram}"/>
-                <DataGridTextColumn Header="Škola" Binding="{Binding StudyProgram}"/>
-                <DataGridTextColumn Header="Datum podání" Binding="{Binding SubmissionDate, StringFormat={}{0:dd.MM.yyyy}}"/>
+        <Rectangle Grid.Row="8" Grid.Column="0"  Height="1" Fill="Gray" Grid.ColumnSpan="5" Margin="5 20 5 5"/>
+        
+        <Label Content="Škola:" Grid.Row="9" Grid.Column="0"></Label>
+        <Label Content="Studijní obor:" Grid.Row="9" Grid.Column="1"></Label>
 
-                <DataGridTemplateColumn Width="*">
-                    <DataGridTemplateColumn.CellTemplate>
-                        <DataTemplate>
-                            <StackPanel Orientation="Horizontal" HorizontalAlignment="Right">
-                                <Button Content="Edit" Click="EditApplication" Margin="0 0 5 0" Width="50"/>
-                                <Button Content="Delete" Click="DeleteApplication" Width="50"/>
-                            </StackPanel>
-                        </DataTemplate>
-                    </DataGridTemplateColumn.CellTemplate>
-                </DataGridTemplateColumn>
-            </DataGrid.Columns>
-            
-        </DataGrid>
+        <ComboBox x:Name="school1" Grid.Row="10" Grid.Column="0" Margin="5" SelectionChanged="SchoolSelectionChanged"></ComboBox>
+        <ComboBox x:Name="program1" ItemsSource="{Binding Application1.StudyProgram}" Grid.Row="10" Grid.Column="1" Margin="5" SelectionChanged="ProgramSelectionChanged"></ComboBox>
+
+        <ComboBox x:Name="school2" Grid.Row="11" Grid.Column="0" Margin="5" SelectionChanged="SchoolSelectionChanged"></ComboBox>
+        <ComboBox x:Name="program2" ItemsSource="{Binding Application2.StudyProgram}" Grid.Row="11" Grid.Column="1" Margin="5"></ComboBox>
+
+        <ComboBox x:Name="school3" Grid.Row="12" Grid.Column="0" Margin="5" SelectionChanged="SchoolSelectionChanged"></ComboBox>
+        <ComboBox x:Name="program3" ItemsSource="{Binding Application3.StudyProgram}" Grid.Row="12" Grid.Column="1" Margin="5"></ComboBox>
 
 
-        <Button x:Name="ConfirmButton" Grid.Row="9" Grid.Column="2" Grid.ColumnSpan="3" Content="Uložit" Margin="5" Click="SaveStudent" Width="100" HorizontalAlignment="Right" VerticalAlignment="Bottom"></Button>
+
+
+        <Button x:Name="ConfirmButton" Grid.Row="13" Grid.Column="2" Grid.ColumnSpan="3" Content="Uložit" Margin="5" Click="SaveStudent" Width="100" HorizontalAlignment="Right" VerticalAlignment="Bottom"></Button>
     </Grid>
 </Window>

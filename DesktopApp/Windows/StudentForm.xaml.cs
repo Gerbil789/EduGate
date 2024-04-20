@@ -9,8 +9,9 @@ namespace DesktopApp.Windows
         public Student Student { get; private set; }
 
 
+
         //edit student
-        public StudentForm(Student? student = null)
+        public StudentForm(MainWindow parent, Student? student = null)
         {
             InitializeComponent();
             Student = new Student();
@@ -30,6 +31,9 @@ namespace DesktopApp.Windows
                 Student.Email = student.Email;
                 Student.Phone.Code = student.Phone.Code;
                 Student.Phone.Number = student.Phone.Number;
+                Student.Application1 = student.Application1;
+                Student.Application2 = student.Application2;
+                Student.Application3 = student.Application3;
 
             }
             else
@@ -37,13 +41,26 @@ namespace DesktopApp.Windows
                 Title = "Add student";
                 ConfirmButton.Content = "Přidat";
             }
+            school1.ItemsSource = parent.Schools;
+            school2.ItemsSource = parent.Schools;
+            school3.ItemsSource = parent.Schools;
 
-           
+         
+            school1.SelectedValue = parent.Schools.FirstOrDefault(x => x.StudyPrograms.Contains(Student.Application1.StudyProgram));
+            school2.SelectedValue = parent.Schools.FirstOrDefault(x => x.StudyPrograms.Contains(Student.Application2.StudyProgram));
+            school3.SelectedValue = parent.Schools.FirstOrDefault(x => x.StudyPrograms.Contains(Student.Application3.StudyProgram));
+
+            program1.ItemsSource = ((School)school1.SelectedValue)?.StudyPrograms ?? null;
+            program2.ItemsSource = ((School)school2.SelectedValue)?.StudyPrograms ?? null;
+            program3.ItemsSource = ((School)school3.SelectedValue)?.StudyPrograms ?? null;
+
+
             this.DataContext = Student;
         }
 
         private void SaveStudent(object sender, RoutedEventArgs e)
         {
+
             DialogResult = true;
             this.Close();
         }
@@ -53,17 +70,34 @@ namespace DesktopApp.Windows
 
         }
 
-        private void AddApplication(object sender, RoutedEventArgs e)
-        {
-
-        }
-
-        private void EditApplication(object sender, RoutedEventArgs e)
-        {
-
-        }
-
         private void DeleteApplication(object sender, RoutedEventArgs e)
+        {
+
+        }
+
+        private void SchoolSelectionChanged(object sender, SelectionChangedEventArgs e)
+        {
+            ComboBox comboBox = (ComboBox)sender;
+           
+            var comboBoxName = comboBox.Name;
+
+            switch(comboBoxName)
+            {
+                case "school1":
+                    program1.ItemsSource = ((School)comboBox.SelectedItem).StudyPrograms;
+                    break;
+                case "school2":
+                    program2.ItemsSource = ((School)comboBox.SelectedItem).StudyPrograms;
+                    break;
+                case "school3":
+                    program3.ItemsSource = ((School)comboBox.SelectedItem).StudyPrograms;
+                    break;
+            }
+   
+
+        }
+
+        private void ProgramSelectionChanged(object sender, SelectionChangedEventArgs e)
         {
 
         }

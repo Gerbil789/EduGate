@@ -85,7 +85,7 @@ namespace DesktopApp.Windows
         //--------------------Students--------------------
         private async void AddStudent(object sender, RoutedEventArgs e)
         {
-            StudentForm form = new();
+            StudentForm form = new(this);
             form.Owner = this;
             form.WindowStartupLocation = WindowStartupLocation.CenterOwner;
 
@@ -130,7 +130,7 @@ namespace DesktopApp.Windows
             Button button = (Button)sender;
             var student = (Student)button.DataContext;
 
-            StudentForm form = new(student);
+            StudentForm form = new(this, student);
             form.Owner = this;
             form.WindowStartupLocation = WindowStartupLocation.CenterOwner;
 

@@ -11,8 +11,8 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace Database.Migrations
 {
     [DbContext(typeof(EduGateDbContext))]
-    [Migration("20240406183930_addConcurenyToken")]
-    partial class addConcurenyToken
+    [Migration("20240413141014_initial")]
+    partial class initial
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -57,18 +57,15 @@ namespace Database.Migrations
                         .ValueGeneratedOnAdd()
                         .HasColumnType("INTEGER");
 
-                    b.Property<bool>("IsAccepted")
+                    b.Property<int?>("StudyProgramId")
                         .HasColumnType("INTEGER");
 
-                    b.Property<int>("StudentId")
-                        .HasColumnType("INTEGER");
-
-                    b.Property<DateTime>("SubmissionDate")
+                    b.Property<DateTime?>("SubmissionDate")
                         .HasColumnType("TEXT");
 
                     b.HasKey("ApplicationId");
 
-                    b.HasIndex("StudentId");
+                    b.HasIndex("StudyProgramId");
 
                     b.ToTable("Applications");
                 });
@@ -121,6 +118,15 @@ namespace Database.Migrations
                     b.Property<int>("AddressId")
                         .HasColumnType("INTEGER");
 
+                    b.Property<int>("Application1ApplicationId")
+                        .HasColumnType("INTEGER");
+
+                    b.Property<int>("Application2ApplicationId")
+                        .HasColumnType("INTEGER");
+
+                    b.Property<int>("Application3ApplicationId")
+                        .HasColumnType("INTEGER");
+
                     b.Property<DateTime>("BirthDate")
                         .HasColumnType("TEXT");
 
@@ -139,13 +145,15 @@ namespace Database.Migrations
                     b.Property<int>("PhoneId")
                         .HasColumnType("INTEGER");
 
-                    b.Property<Guid>("Version")
-                        .IsConcurrencyToken()
-                        .HasColumnType("TEXT");
-
                     b.HasKey("StudentId");
 
                     b.HasIndex("AddressId");
+
+                    b.HasIndex("Application1ApplicationId");
+
+                    b.HasIndex("Application2ApplicationId");
+
+                    b.HasIndex("Application3ApplicationId");
 
                     b.HasIndex("PhoneId");
 
@@ -156,9 +164,6 @@ namespace Database.Migrations
                 {
                     b.Property<int>("StudyProgramId")
                         .ValueGeneratedOnAdd()
-                        .HasColumnType("INTEGER");
-
-                    b.Property<int?>("ApplicationId")
                         .HasColumnType("INTEGER");
 
                     b.Property<int>("AvailableSeats")
@@ -176,12 +181,10 @@ namespace Database.Migrations
                         .IsRequired()
                         .HasColumnType("TEXT");
 
-                    b.Property<int>("SchoolId")
+                    b.Property<int?>("SchoolId")
                         .HasColumnType("INTEGER");
 
                     b.HasKey("StudyProgramId");
-
-                    b.HasIndex("ApplicationId");
 
                     b.HasIndex("SchoolId");
 
@@ -190,13 +193,11 @@ namespace Database.Migrations
 
             modelBuilder.Entity("Database.Models.Application", b =>
                 {
-                    b.HasOne("Database.Models.Student", "Student")
+                    b.HasOne("Database.Models.StudyProgram", "StudyProgram")
                         .WithMany()
-                        .HasForeignKey("StudentId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
+                        .HasForeignKey("StudyProgramId");
 
-                    b.Navigation("Student");
+                    b.Navigation("StudyProgram");
                 });
 
             modelBuilder.Entity("Database.Models.School", b =>
@@ -218,6 +219,24 @@ namespace Database.Migrations
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
+                    b.HasOne("Database.Models.Application", "Application1")
+                        .WithMany()
+                        .HasForeignKey("Application1ApplicationId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.HasOne("Database.Models.Application", "Application2")
+                        .WithMany()
+                        .HasForeignKey("Application2ApplicationId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.HasOne("Database.Models.Application", "Application3")
+                        .WithMany()
+                        .HasForeignKey("Application3ApplicationId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
                     b.HasOne("Database.Models.Phone", "Phone")
                         .WithMany()
                         .HasForeignKey("PhoneId")
@@ -226,25 +245,23 @@ namespace Database.Migrations
 
                     b.Navigation("Address");
 
+                    b.Navigation("Application1");
+
+                    b.Navigation("Application2");
+
+                    b.Navigation("Application3");
+
                     b.Navigation("Phone");
                 });
 
             modelBuilder.Entity("Database.Models.StudyProgram", b =>
                 {
-                    b.HasOne("Database.Models.Application", null)
+                    b.HasOne("Database.Models.School", null)
                         .WithMany("StudyPrograms")
-                        .HasForeignKey("ApplicationId");
-
-                    b.HasOne("Database.Models.School", "School")
-                        .WithMany()
-                        .HasForeignKey("SchoolId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.Navigation("School");
+                        .HasForeignKey("SchoolId");
                 });
 
-            modelBuilder.Entity("Database.Models.Application", b =>
+            modelBuilder.Entity("Database.Models.School", b =>
                 {
                     b.Navigation("StudyPrograms");
                 });

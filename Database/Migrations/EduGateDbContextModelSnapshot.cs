@@ -54,18 +54,13 @@ namespace Database.Migrations
                         .ValueGeneratedOnAdd()
                         .HasColumnType("INTEGER");
 
-                    b.Property<int?>("StudentId")
-                        .HasColumnType("INTEGER");
-
-                    b.Property<int>("StudyProgramId")
+                    b.Property<int?>("StudyProgramId")
                         .HasColumnType("INTEGER");
 
                     b.Property<DateTime?>("SubmissionDate")
                         .HasColumnType("TEXT");
 
                     b.HasKey("ApplicationId");
-
-                    b.HasIndex("StudentId");
 
                     b.HasIndex("StudyProgramId");
 
@@ -120,6 +115,15 @@ namespace Database.Migrations
                     b.Property<int>("AddressId")
                         .HasColumnType("INTEGER");
 
+                    b.Property<int>("Application1ApplicationId")
+                        .HasColumnType("INTEGER");
+
+                    b.Property<int>("Application2ApplicationId")
+                        .HasColumnType("INTEGER");
+
+                    b.Property<int>("Application3ApplicationId")
+                        .HasColumnType("INTEGER");
+
                     b.Property<DateTime>("BirthDate")
                         .HasColumnType("TEXT");
 
@@ -141,6 +145,12 @@ namespace Database.Migrations
                     b.HasKey("StudentId");
 
                     b.HasIndex("AddressId");
+
+                    b.HasIndex("Application1ApplicationId");
+
+                    b.HasIndex("Application2ApplicationId");
+
+                    b.HasIndex("Application3ApplicationId");
 
                     b.HasIndex("PhoneId");
 
@@ -180,15 +190,9 @@ namespace Database.Migrations
 
             modelBuilder.Entity("Database.Models.Application", b =>
                 {
-                    b.HasOne("Database.Models.Student", null)
-                        .WithMany("Applications")
-                        .HasForeignKey("StudentId");
-
                     b.HasOne("Database.Models.StudyProgram", "StudyProgram")
                         .WithMany()
-                        .HasForeignKey("StudyProgramId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
+                        .HasForeignKey("StudyProgramId");
 
                     b.Navigation("StudyProgram");
                 });
@@ -212,6 +216,24 @@ namespace Database.Migrations
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
+                    b.HasOne("Database.Models.Application", "Application1")
+                        .WithMany()
+                        .HasForeignKey("Application1ApplicationId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.HasOne("Database.Models.Application", "Application2")
+                        .WithMany()
+                        .HasForeignKey("Application2ApplicationId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.HasOne("Database.Models.Application", "Application3")
+                        .WithMany()
+                        .HasForeignKey("Application3ApplicationId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
                     b.HasOne("Database.Models.Phone", "Phone")
                         .WithMany()
                         .HasForeignKey("PhoneId")
@@ -219,6 +241,12 @@ namespace Database.Migrations
                         .IsRequired();
 
                     b.Navigation("Address");
+
+                    b.Navigation("Application1");
+
+                    b.Navigation("Application2");
+
+                    b.Navigation("Application3");
 
                     b.Navigation("Phone");
                 });
@@ -233,11 +261,6 @@ namespace Database.Migrations
             modelBuilder.Entity("Database.Models.School", b =>
                 {
                     b.Navigation("StudyPrograms");
-                });
-
-            modelBuilder.Entity("Database.Models.Student", b =>
-                {
-                    b.Navigation("Applications");
                 });
 #pragma warning restore 612, 618
         }
