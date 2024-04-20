@@ -32,9 +32,6 @@ namespace DesktopApp.Windows
                 School.Address.State = school.Address.State;
                 School.Address.ZipCode = school.Address.ZipCode;
                 School.StudyPrograms = school.StudyPrograms;
-
-
-
             }
             this.DataContext = School;
 

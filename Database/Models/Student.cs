@@ -26,8 +26,14 @@ namespace Database.Models
         private Phone phone = new();
         public Phone Phone { get { return phone; } set { SetProperty(ref phone, value); } }
 
-        private ObservableCollection<Application> applications = new();
-        public ObservableCollection<Application> Applications { get { return applications; } set { SetProperty(ref applications, value); } }
+        private Application application1 = new();
+        public Application Application1 { get { return application1; } set { SetProperty(ref application1, value); } }
+
+        private Application application2 = new();
+        public Application Application2 { get { return application2; } set { SetProperty(ref application2, value); } }
+
+        private Application application3 = new();
+        public Application Application3 { get { return application3; } set { SetProperty(ref application3, value); } }
 
         public event PropertyChangedEventHandler? PropertyChanged;
         protected virtual void OnPropertyChanged([CallerMemberName] string? propertyName = null)

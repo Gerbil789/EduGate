@@ -6,7 +6,7 @@ using Microsoft.EntityFrameworkCore.Migrations;
 namespace Database.Migrations
 {
     /// <inheritdoc />
-    public partial class initialize : Migration
+    public partial class initial : Migration
     {
         /// <inheritdoc />
         protected override void Up(MigrationBuilder migrationBuilder)
@@ -63,6 +63,47 @@ namespace Database.Migrations
                 });
 
             migrationBuilder.CreateTable(
+                name: "StudyPrograms",
+                columns: table => new
+                {
+                    StudyProgramId = table.Column<int>(type: "INTEGER", nullable: false)
+                        .Annotation("Sqlite:Autoincrement", true),
+                    Name = table.Column<string>(type: "TEXT", nullable: false),
+                    Identifier = table.Column<string>(type: "TEXT", nullable: false),
+                    Description = table.Column<string>(type: "TEXT", nullable: false),
+                    AvailableSeats = table.Column<int>(type: "INTEGER", nullable: false),
+                    SchoolId = table.Column<int>(type: "INTEGER", nullable: true)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_StudyPrograms", x => x.StudyProgramId);
+                    table.ForeignKey(
+                        name: "FK_StudyPrograms_Schools_SchoolId",
+                        column: x => x.SchoolId,
+                        principalTable: "Schools",
+                        principalColumn: "SchoolId");
+                });
+
+            migrationBuilder.CreateTable(
+                name: "Applications",
+                columns: table => new
+                {
+                    ApplicationId = table.Column<int>(type: "INTEGER", nullable: false)
+                        .Annotation("Sqlite:Autoincrement", true),
+                    SubmissionDate = table.Column<DateTime>(type: "TEXT", nullable: true),
+                    StudyProgramId = table.Column<int>(type: "INTEGER", nullable: true)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_Applications", x => x.ApplicationId);
+                    table.ForeignKey(
+                        name: "FK_Applications_StudyPrograms_StudyProgramId",
+                        column: x => x.StudyProgramId,
+                        principalTable: "StudyPrograms",
+                        principalColumn: "StudyProgramId");
+                });
+
+            migrationBuilder.CreateTable(
                 name: "Students",
                 columns: table => new
                 {
@@ -73,7 +114,10 @@ namespace Database.Migrations
                     BirthDate = table.Column<DateTime>(type: "TEXT", nullable: false),
                     AddressId = table.Column<int>(type: "INTEGER", nullable: false),
                     Email = table.Column<string>(type: "TEXT", nullable: false),
-                    PhoneId = table.Column<int>(type: "INTEGER", nullable: false)
+                    PhoneId = table.Column<int>(type: "INTEGER", nullable: false),
+                    Application1ApplicationId = table.Column<int>(type: "INTEGER", nullable: false),
+                    Application2ApplicationId = table.Column<int>(type: "INTEGER", nullable: false),
+                    Application3ApplicationId = table.Column<int>(type: "INTEGER", nullable: false)
                 },
                 constraints: table =>
                 {
@@ -85,6 +129,24 @@ namespace Database.Migrations
                         principalColumn: "AddressId",
                         onDelete: ReferentialAction.Cascade);
                     table.ForeignKey(
+                        name: "FK_Students_Applications_Application1ApplicationId",
+                        column: x => x.Application1ApplicationId,
+                        principalTable: "Applications",
+                        principalColumn: "ApplicationId",
+                        onDelete: ReferentialAction.Cascade);
+                    table.ForeignKey(
+                        name: "FK_Students_Applications_Application2ApplicationId",
+                        column: x => x.Application2ApplicationId,
+                        principalTable: "Applications",
+                        principalColumn: "ApplicationId",
+                        onDelete: ReferentialAction.Cascade);
+                    table.ForeignKey(
+                        name: "FK_Students_Applications_Application3ApplicationId",
+                        column: x => x.Application3ApplicationId,
+                        principalTable: "Applications",
+                        principalColumn: "ApplicationId",
+                        onDelete: ReferentialAction.Cascade);
+                    table.ForeignKey(
                         name: "FK_Students_Phones_PhoneId",
                         column: x => x.PhoneId,
                         principalTable: "Phones",
@@ -92,60 +154,10 @@ namespace Database.Migrations
                         onDelete: ReferentialAction.Cascade);
                 });
 
-            migrationBuilder.CreateTable(
-                name: "Applications",
-                columns: table => new
-                {
-                    ApplicationId = table.Column<int>(type: "INTEGER", nullable: false)
-                        .Annotation("Sqlite:Autoincrement", true),
-                    SubmissionDate = table.Column<DateTime>(type: "TEXT", nullable: false),
-                    StudentId = table.Column<int>(type: "INTEGER", nullable: false),
-                    IsAccepted = table.Column<bool>(type: "INTEGER", nullable: false)
-                },
-                constraints: table =>
-                {
-                    table.PrimaryKey("PK_Applications", x => x.ApplicationId);
-                    table.ForeignKey(
-                        name: "FK_Applications_Students_StudentId",
-                        column: x => x.StudentId,
-                        principalTable: "Students",
-                        principalColumn: "StudentId",
-                        onDelete: ReferentialAction.Cascade);
-                });
-
-            migrationBuilder.CreateTable(
-                name: "StudyPrograms",
-                columns: table => new
-                {
-                    StudyProgramId = table.Column<int>(type: "INTEGER", nullable: false)
-                        .Annotation("Sqlite:Autoincrement", true),
-                    SchoolId = table.Column<int>(type: "INTEGER", nullable: false),
-                    Name = table.Column<string>(type: "TEXT", nullable: false),
-                    Identifier = table.Column<string>(type: "TEXT", nullable: false),
-                    Description = table.Column<string>(type: "TEXT", nullable: false),
-                    AvailableSeats = table.Column<int>(type: "INTEGER", nullable: false),
-                    ApplicationId = table.Column<int>(type: "INTEGER", nullable: true)
-                },
-                constraints: table =>
-                {
-                    table.PrimaryKey("PK_StudyPrograms", x => x.StudyProgramId);
-                    table.ForeignKey(
-                        name: "FK_StudyPrograms_Applications_ApplicationId",
-                        column: x => x.ApplicationId,
-                        principalTable: "Applications",
-                        principalColumn: "ApplicationId");
-                    table.ForeignKey(
-                        name: "FK_StudyPrograms_Schools_SchoolId",
-                        column: x => x.SchoolId,
-                        principalTable: "Schools",
-                        principalColumn: "SchoolId",
-                        onDelete: ReferentialAction.Cascade);
-                });
-
             migrationBuilder.CreateIndex(
-                name: "IX_Applications_StudentId",
+                name: "IX_Applications_StudyProgramId",
                 table: "Applications",
-                column: "StudentId");
+                column: "StudyProgramId");
 
             migrationBuilder.CreateIndex(
                 name: "IX_Schools_AddressId",
@@ -158,14 +170,24 @@ namespace Database.Migrations
                 column: "AddressId");
 
             migrationBuilder.CreateIndex(
+                name: "IX_Students_Application1ApplicationId",
+                table: "Students",
+                column: "Application1ApplicationId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_Students_Application2ApplicationId",
+                table: "Students",
+                column: "Application2ApplicationId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_Students_Application3ApplicationId",
+                table: "Students",
+                column: "Application3ApplicationId");
+
+            migrationBuilder.CreateIndex(
                 name: "IX_Students_PhoneId",
                 table: "Students",
                 column: "PhoneId");
-
-            migrationBuilder.CreateIndex(
-                name: "IX_StudyPrograms_ApplicationId",
-                table: "StudyPrograms",
-                column: "ApplicationId");
 
             migrationBuilder.CreateIndex(
                 name: "IX_StudyPrograms_SchoolId",
@@ -177,22 +199,22 @@ namespace Database.Migrations
         protected override void Down(MigrationBuilder migrationBuilder)
         {
             migrationBuilder.DropTable(
-                name: "StudyPrograms");
+                name: "Students");
 
             migrationBuilder.DropTable(
                 name: "Applications");
 
             migrationBuilder.DropTable(
+                name: "Phones");
+
+            migrationBuilder.DropTable(
+                name: "StudyPrograms");
+
+            migrationBuilder.DropTable(
                 name: "Schools");
 
             migrationBuilder.DropTable(
-                name: "Students");
-
-            migrationBuilder.DropTable(
                 name: "Addresses");
-
-            migrationBuilder.DropTable(
-                name: "Phones");
         }
     }
 }

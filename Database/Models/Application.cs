@@ -10,8 +10,8 @@ namespace Database.Models
         private DateTime? submissionDate = null;
         public DateTime? SubmissionDate { get { return submissionDate; } set { SetProperty(ref submissionDate, value); } }
 
-        private StudyProgram studyProgram = new();
-        public StudyProgram StudyProgram { get { return studyProgram; } set { SetProperty(ref studyProgram, value); } }
+        private StudyProgram? studyProgram = null;
+        public StudyProgram? StudyProgram { get { return studyProgram; } set { SetProperty(ref studyProgram, value); } }
 
         public event PropertyChangedEventHandler? PropertyChanged;
         protected virtual void OnPropertyChanged([CallerMemberName] string propertyName = null)

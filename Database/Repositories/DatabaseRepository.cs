@@ -16,7 +16,7 @@ namespace Database.Repositories
         {
             try
             {
-                return await dbContext.Students.Include(x => x.Address).Include(x => x.Phone).ToListAsync();
+                return await dbContext.Students.Include(x => x.Address).Include(x => x.Phone).Include(x => x.Application1).Include(x => x.Application3).Include(x => x.Application1).ToListAsync();
             }
             catch(Exception e)
             {
@@ -58,6 +58,12 @@ namespace Database.Repositories
                 student.Phone = modifiedStudent.Phone;
                 student.Phone.Code = modifiedStudent.Phone.Code;
                 student.Phone.Number = modifiedStudent.Phone.Number;
+                student.Application1 = modifiedStudent.Application1;
+                student.Application1.StudyProgram = modifiedStudent.Application1.StudyProgram;
+                student.Application2 = modifiedStudent.Application2;
+                student.Application2.StudyProgram = modifiedStudent.Application2.StudyProgram;
+                student.Application3 = modifiedStudent.Application3;
+                student.Application3.StudyProgram = modifiedStudent.Application3.StudyProgram;
 
                 await dbContext.SaveChangesAsync();
                 return true;

@@ -9,6 +9,8 @@ using Microsoft.EntityFrameworkCore;
 
 // if ERROR -> dotnet add package Microsoft.EntityFrameworkCore.Tools 
 
+// delete database -> 
+
 namespace Database
 {
     public class EduGateDbContext : DbContext
