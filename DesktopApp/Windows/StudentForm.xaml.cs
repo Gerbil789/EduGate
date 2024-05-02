@@ -54,6 +54,11 @@ namespace DesktopApp.Windows
             program2.ItemsSource = ((School)school2.SelectedValue)?.StudyPrograms ?? null;
             program3.ItemsSource = ((School)school3.SelectedValue)?.StudyPrograms ?? null;
 
+            program1.SelectedValue = Student.Application1.StudyProgram;
+            program2.SelectedValue = Student.Application2.StudyProgram;
+            program3.SelectedValue = Student.Application3.StudyProgram;
+
+
 
             this.DataContext = Student;
         }
@@ -65,19 +70,14 @@ namespace DesktopApp.Windows
             this.Close();
         }
 
-        private void TextBox_PreviewTextInput(object sender, System.Windows.Input.TextCompositionEventArgs e)
-        {
-
-        }
-
-        private void DeleteApplication(object sender, RoutedEventArgs e)
-        {
-
-        }
-
         private void SchoolSelectionChanged(object sender, SelectionChangedEventArgs e)
         {
             ComboBox comboBox = (ComboBox)sender;
+
+            if(comboBox.SelectedItem == null)
+            {
+                return;
+            }
            
             var comboBoxName = comboBox.Name;
 
@@ -93,13 +93,48 @@ namespace DesktopApp.Windows
                     program3.ItemsSource = ((School)comboBox.SelectedItem).StudyPrograms;
                     break;
             }
-   
-
         }
 
         private void ProgramSelectionChanged(object sender, SelectionChangedEventArgs e)
         {
+            ComboBox comboBox = (ComboBox)sender;
+            var comboBoxName = comboBox.Name;
 
+            switch (comboBoxName)
+            {
+                case "program1":
+                    Student.Application1.StudyProgram = (StudyProgram)comboBox.SelectedItem;
+                    break;
+                case "program2":
+                    Student.Application2.StudyProgram = (StudyProgram)comboBox.SelectedItem;
+                    break;
+                case "program3":
+                    Student.Application3.StudyProgram = (StudyProgram)comboBox.SelectedItem;
+                    break;
+            }
+        }
+
+        private void ResetStudyProgram(object sender, RoutedEventArgs e)
+        {
+            Button button = (Button)sender;
+            var buttonName = button.Name;
+
+            switch (buttonName)
+            {
+                case "reset1":
+
+                    program1.SelectedValue = -1;
+                    school1.SelectedValue = -1;
+                    break;
+                case "reset2":
+                    program2.SelectedValue = -1;
+                    school2.SelectedValue = -1;
+                    break;
+                case "reset3":
+                    program3.SelectedValue = -1;
+                    school3.SelectedValue = -1;
+                    break;
+            }
         }
     }
 }

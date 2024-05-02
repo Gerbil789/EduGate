@@ -89,12 +89,15 @@
 
         <ComboBox x:Name="school1" Grid.Row="10" Grid.Column="0" Margin="5" SelectionChanged="SchoolSelectionChanged"></ComboBox>
         <ComboBox x:Name="program1" ItemsSource="{Binding Application1.StudyProgram}" Grid.Row="10" Grid.Column="1" Margin="5" SelectionChanged="ProgramSelectionChanged"></ComboBox>
+        <Button x:Name="reset1" Grid.Row="10" Grid.Column="2" Content="Reset" Margin="5" Click="ResetStudyProgram"></Button>
 
         <ComboBox x:Name="school2" Grid.Row="11" Grid.Column="0" Margin="5" SelectionChanged="SchoolSelectionChanged"></ComboBox>
-        <ComboBox x:Name="program2" ItemsSource="{Binding Application2.StudyProgram}" Grid.Row="11" Grid.Column="1" Margin="5"></ComboBox>
+        <ComboBox x:Name="program2" ItemsSource="{Binding Application2.StudyProgram}" Grid.Row="11" Grid.Column="1" Margin="5" SelectionChanged="ProgramSelectionChanged"></ComboBox>
+        <Button x:Name="reset2" Grid.Row="11" Grid.Column="2" Content="Reset" Margin="5" Click="ResetStudyProgram"></Button>
 
         <ComboBox x:Name="school3" Grid.Row="12" Grid.Column="0" Margin="5" SelectionChanged="SchoolSelectionChanged"></ComboBox>
-        <ComboBox x:Name="program3" ItemsSource="{Binding Application3.StudyProgram}" Grid.Row="12" Grid.Column="1" Margin="5"></ComboBox>
+        <ComboBox x:Name="program3" ItemsSource="{Binding Application3.StudyProgram}" Grid.Row="12" Grid.Column="1" Margin="5" SelectionChanged="ProgramSelectionChanged"></ComboBox>
+        <Button x:Name="reset3" Grid.Row="12" Grid.Column="2" Content="Reset" Margin="5" Click="ResetStudyProgram"></Button>
 
 
 

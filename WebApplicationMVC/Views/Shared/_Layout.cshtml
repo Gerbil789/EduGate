@@ -1,21 +1,56 @@
-﻿<!DOCTYPE html>
+﻿@inject Microsoft.AspNetCore.Http.IHttpContextAccessor HttpContextAccessor
+
+<!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>@ViewData["Title"] - WebApplicationMVC</title>
+    <title>EduGate</title>
     <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.min.css" />
     <link rel="stylesheet" href="~/css/site.css" asp-append-version="true" />
     <link rel="stylesheet" href="~/WebApplicationMVC.styles.css" asp-append-version="true" />
 </head>
 <body>
-   Počet zboží v košíku: @ViewBag.CartProductCount
+    <nav class="navbar navbar-expand-lg navbar-light bg-light">
+        <div class="container-fluid">
+            <a class="navbar-brand" href="@Url.Action("Index", "Home")">EduGate</a>
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse" id="navbarNav">
+                <ul class="navbar-nav me-auto">
+                    <li class="nav-item">
+                        <a class="nav-link" href="@Url.Action("Index", "Application")">Přihlášky</a>
+                    </li>
+                </ul>
 
-   <ul>
-      <li><a href="@Url.Action("Index", "Home")">Uvodni stránka</a></li>
-      <li><a href="@Url.Action("Index", "Eshop")">Eshop</a></li>
-      <li><a href="@Url.Action("Form", "Eshop")">Nákupní Kashyk</a></li>
-   </ul>
+                <ul class="navbar-nav ms-auto">
+                    @{
+                        var loggedUserId = HttpContextAccessor.HttpContext.Session.GetInt32("LoggedUserId");
+                        var email = HttpContextAccessor.HttpContext.Session.GetString("LoggedUserEmail");
+                    }
+
+                    @if (loggedUserId != null)
+                    {
+                        <li class="nav-item">
+                            <span class="nav-link">
+                                @email
+                            </span>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" href="@Url.Action("Logout", "Login")">Odhlásit</a>
+                        </li>
+                    }
+                    else
+                    {
+                        <li class="nav-item">
+                            <a class="nav-link" href="@Url.Action("Index", "Login")">Přihlášení</a>
+                        </li>
+                    }
+                </ul>
+            </div>
+        </div>
+    </nav>
    @RenderBody()
 </body>
 </html>

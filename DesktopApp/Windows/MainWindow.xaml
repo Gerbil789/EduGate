@@ -52,7 +52,7 @@
                         <DataGridTextColumn Header="Adresa" Binding="{Binding Address}" CanUserSort="False"/>
                         <DataGridTextColumn Header="Email" Binding="{Binding Email}" CanUserSort="False"/>
                         <DataGridTextColumn Header="Telefon" Binding="{Binding Phone}" CanUserSort="False"/>
-                        <DataGridTextColumn Header="Přihlášky" Binding="{Binding Applications.Count, StringFormat={}{0}/3}" CanUserSort="False"/>
+                        <DataGridTextColumn Header="Přihlášky" Binding="{Binding ApplicationCount, StringFormat={}{0}/3}" CanUserSort="False"/>
 
                         <DataGridTemplateColumn Width="*">
                             <DataGridTemplateColumn.CellTemplate>

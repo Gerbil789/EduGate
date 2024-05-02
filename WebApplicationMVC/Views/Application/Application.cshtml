@@ -1,0 +1,117 @@
+﻿@using Database.Models
+@using Newtonsoft.Json
+@model Database.Models.Student
+
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+<link rel="stylesheet" href="https://code.jquery.com/ui/1.13.2/themes/base/jquery-ui.css">
+<script src="https://code.jquery.com/ui/1.13.2/jquery-ui.min.js"></script>
+
+<script>
+    $(function () {
+        // Initialize autocomplete on the text box with the id "school"
+        $("#school").autocomplete({
+            source: function (request, response) {
+                $.ajax({
+                    url: '@Url.Action("GetSchools", "Application")', // Adjust to your controller/action
+                    type: "GET",
+                    dataType: "json",
+                    data: { term: request.term }, // Send the user input to the server
+                    success: function (schools) {
+                        // Provide autocomplete suggestions
+                        response(schools.map(school => school.Name));
+                    },
+                    error: function () {
+                        console.error("Error fetching schools.");
+                    }
+                });
+            },
+            minLength: 2, // Minimum characters before suggestions appear
+            select: function (event, ui) {
+                // Handle selection, if needed
+                console.log("Selected school:", ui.item.value);
+            }
+        });
+    });
+</script>
+
+<h1>Student info</h1>
+
+@using (Html.BeginForm("Application", "Application", FormMethod.Post))
+{
+        <div>-----Student-----</div>
+        <div>
+            @Html.LabelFor(x => x.FirstName)
+            @Html.TextBoxFor(x => x.FirstName)
+            @Html.ValidationMessageFor(x => x.FirstName)
+        </div>
+        <div>
+            @Html.LabelFor(x => x.LastName)
+            @Html.TextBoxFor(x => x.LastName)
+            @Html.ValidationMessageFor(x => x.LastName)
+        </div>
+        <div>
+            @Html.LabelFor(x => x.BirthDate)
+            @Html.TextBoxFor(x => x.BirthDate, new { type = "date" })
+            @Html.ValidationMessageFor(x => x.BirthDate)
+        </div>
+
+        <div>-----Adresa-----</div>
+        <div>
+            @Html.LabelFor(x => x.Address.State)
+            @Html.TextBoxFor(x => x.Address.State)
+            @Html.ValidationMessageFor(x => x.Address.State)
+        </div>
+        <div>
+            @Html.LabelFor(x => x.Address.City)
+            @Html.TextBoxFor(x => x.Address.City)
+            @Html.ValidationMessageFor(x => x.Address.City)
+        </div>
+        <div>
+            @Html.LabelFor(x => x.Address.Street)
+            @Html.TextBoxFor(x => x.Address.Street)
+            @Html.ValidationMessageFor(x => x.Address.Street)
+        </div>
+        <div>
+            @Html.LabelFor(x => x.Address.Number)
+            @Html.TextBoxFor(x => x.Address.Number)
+            @Html.ValidationMessageFor(x => x.Address.Number)
+        </div>
+        <div>
+            @Html.LabelFor(x => x.Address.ZipCode)
+            @Html.TextBoxFor(x => x.Address.ZipCode)
+            @Html.ValidationMessageFor(x => x.Address.ZipCode)
+        </div>
+
+        <div>-----Kontakt-----</div>
+        <div>
+            @Html.LabelFor(x => x.Email)
+            @Html.TextBoxFor(x => x.Email)
+            @Html.ValidationMessageFor(x => x.Email)
+        </div>
+
+        <div>
+            @Html.LabelFor(x => x.Phone.Number)
+            @Html.TextBoxFor(x => x.Phone.Code)
+            @Html.TextBoxFor(x => x.Phone.Number)
+
+            @Html.ValidationMessageFor(x => x.Phone.Code)
+            @Html.ValidationMessageFor(x => x.Phone.Number)
+        </div>
+
+
+        <div>-----Studijní programy-----</div>
+        <div>
+            @Html.Label("School", "Select School")
+            @Html.TextBox("school", null, new { id = "school" })
+
+        </div>
+
+        <div>
+            @Html.LabelFor(x => x.Application1.StudyProgram, "Select Program")
+            @Html.DropDownListFor(x => x.Application1.StudyProgram, Enumerable.Empty<SelectListItem>(), "Select a Study Program", new { id = "study-program" })
+
+        </div>
+
+        <button type="submit">Odeslat</button>
+
+}

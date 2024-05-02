@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.ComponentModel;
+using System.ComponentModel.DataAnnotations;
 using System.Linq;
 using System.Runtime.CompilerServices;
 using System.Text;
@@ -11,6 +12,7 @@ namespace Database.Models
     public class Phone : INotifyPropertyChanged
     {
         public Phone() { }
+
 
         public Phone(string code, string number) 
         { 
@@ -25,7 +27,10 @@ namespace Database.Models
 
         public int PhoneId { get; set; }
 
-        private string code = string.Empty;
+        private string code = "+420";
+        [DisplayName("Předčíslí")]
+        [Required(ErrorMessage = "Předčíslí je povinné")]
+        [RegularExpression(@"^\+?\d{3}$", ErrorMessage = "Předčíslí musí mít 3 číslice")]
         public string Code
         {
             get { return code; }
@@ -33,6 +38,9 @@ namespace Database.Models
         }
 
         private string number = string.Empty;
+        [DisplayName("Telefonní číslo")]
+        [Required(ErrorMessage = "Telefonní číslo je povinné")]
+        [RegularExpression(@"^\d{9}$", ErrorMessage = "Telefonní číslo musí mít 9 číslic")]
         public string Number
         {
             get { return number; }

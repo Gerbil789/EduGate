@@ -139,6 +139,7 @@ namespace DesktopApp.Windows
             try
             {
                 await repository.UpdateStudent(form.Student);
+
             }
             catch (Exception ex)
             {

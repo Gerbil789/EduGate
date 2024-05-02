@@ -1,0 +1,126 @@
+﻿@model Database.Models.Student
+
+@{
+    string error = ViewBag.error;
+}
+
+<div class="container my-4">
+    @if (!string.IsNullOrEmpty(error))
+    {
+        <div class="alert alert-danger">
+            @error
+        </div>
+    }
+
+
+    <h1>Student</h1>
+    @using (Html.BeginForm("Index", "Application", FormMethod.Post, new { @class = "form-horizontal" }))
+    {
+        <div class="row mb-3">
+            <div class="col-md-6">
+                @Html.LabelFor(x => x.FirstName, new { @class = "form-label" })
+                @Html.TextBoxFor(x => x.FirstName, new { @class = "form-control" })
+                @Html.ValidationMessageFor(x => x.FirstName, "", new { @class = "text-danger" })
+            </div>
+            <div class="col-md-6">
+                @Html.LabelFor(x => x.LastName, new { @class = "form-label" })
+                @Html.TextBoxFor(x => x.LastName, new { @class = "form-control" })
+                @Html.ValidationMessageFor(x => x.LastName, "", new { @class = "text-danger" })
+            </div>
+        </div>
+
+        <div class="row mb-3">
+            <div class="col-md-6">
+                @Html.LabelFor(x => x.BirthDate, new { @class = "form-label" })
+                @Html.TextBoxFor(x => x.BirthDate, new { @class = "form-control", type = "date" })
+                @Html.ValidationMessageFor(x => x.BirthDate, "", new { @class = "text-danger" })
+            </div>
+        </div>
+
+        <!-- Contact Information -->
+        <h4>Kontakt</h4>
+        <div class="row mb-3">
+            <div class="col-md-6">
+                @Html.LabelFor(x => x.Email, new { @class = "form-label" })
+                @Html.TextBoxFor(x => x.Email, new { @class = "form-control" })
+                @Html.ValidationMessageFor(x => x.Email, "", new { @class = "text-danger" })
+            </div>
+            <div class="col-md-3">
+                @Html.LabelFor(x => x.Phone.Code, new { @class = "form-label" })
+                @Html.TextBoxFor(x => x.Phone.Code, new { @class = "form-control" })
+                @Html.ValidationMessageFor(x => x.Phone.Code, "", new { @class = "text-danger" })
+
+            </div>
+            <div class="col-md-3">
+                @Html.LabelFor(x => x.Phone.Number, new { @class = "form-label" })
+                @Html.TextBoxFor(x => x.Phone.Number, new { @class = "form-control" })
+                @Html.ValidationMessageFor(x => x.Phone.Number, "", new { @class = "text-danger" })
+            </div>
+        </div>
+
+        <!-- Address Information -->
+        <h4>Adresa</h4>
+        <div class="row mb-3">
+            <div class="col-md-6">
+                @Html.LabelFor(x => x.Address.State, new { @class = "form-label" })
+                @Html.TextBoxFor(x => x.Address.State, new { @class = "form-control" })
+                @Html.ValidationMessageFor(x => x.Address.State, "", new { @class = "text-danger" })
+            </div>
+            <div class="col-md-6">
+                @Html.LabelFor(x => x.Address.City, new { @class = "form-label" })
+                @Html.TextBoxFor(x => x.Address.City, new { @class = "form-control" })
+                @Html.ValidationMessageFor(x => x.Address.City, "", new { @class = "text-danger" })
+            </div>
+        </div>
+
+        <div class="row mb-3">
+            <div class="col-md-6">
+                @Html.LabelFor(x => x.Address.Street, new { @class = "form-label" })
+                @Html.TextBoxFor(x => x.Address.Street, new { @class = "form-control" })
+                @Html.ValidationMessageFor(x => x.Address.Street, "", new { @class = "text-danger" })
+            </div>
+            <div class="col-md-3">
+                @Html.LabelFor(x => x.Address.Number, new { @class = "form-label" })
+                @Html.TextBoxFor(x => x.Address.Number, new { @class = "form-control" })
+                @Html.ValidationMessageFor(x => x.Address.Number, "", new { @class = "text-danger" })
+            </div>
+            <div class="col-md-3">
+                @Html.LabelFor(x => x.Address.ZipCode, new { @class = "form-label" })
+                @Html.TextBoxFor(x => x.Address.ZipCode, new { @class = "form-control" })
+                @Html.ValidationMessageFor(x => x.Address.ZipCode, "", new { @class = "text-danger" })
+            </div>
+        </div>
+   
+
+    <hr />
+    <h1>Přihlášky</h1>
+    <div id="applications-section">
+        @for (int i = 0; i < 3; i++)
+        {
+            <div class="row mb-3">
+                <div class="col-md-6">
+                    <label for="school-@i">Škola</label>
+                    <input type="text" class="form-control" name="school-@i" id="school-@i" placeholder="Zadejte název školy">
+                </div>
+                <div class="col-md-6">
+                    <label for="specialization-@i">Specializace</label>
+                    <select class="form-control" name="specialization-@i" id="specialization-@i">
+                        <option value="">Vyberte specializaci</option>
+                        <option value="informatics">Informatika</option>
+                        <option value="engineering">Inženýrství</option>
+                        <option value="medicine">Medicína</option>
+                        <option value="business">Podnikání</option>
+                        <!-- Add more specializations as needed -->
+                    </select>
+                </div>
+            </div>
+        }
+    </div>
+
+    <!-- Submit Button -->
+    <div class="text-end">
+        <button type="submit" class="btn btn-primary">Uložit</button>
+    </div>
+    }
+
+</div>
