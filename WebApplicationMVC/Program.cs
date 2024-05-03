@@ -4,8 +4,6 @@ var builder = WebApplication.CreateBuilder(args);
 
 builder.Services.AddHttpContextAccessor();
 builder.Services.AddControllersWithViews();
-builder.Services.AddScoped<ProductService>();
-builder.Services.AddSingleton<CartService>(); //not in real world
 builder.Services.AddTransient<DatabaseService>();
 
 builder.Services.AddSession(options =>

@@ -19,6 +19,7 @@ namespace WebApplicationMVC.Controllers
             return Json(schools);
         }
 
+        [HttpGet]
         public async Task<IActionResult> Index()
         {
             var userId = HttpContext.Session.GetInt32("LoggedUserId");
@@ -49,6 +50,7 @@ namespace WebApplicationMVC.Controllers
             return RedirectToAction("Success");
         }
 
+        [HttpGet]
         public IActionResult Success()
         {
             return View();

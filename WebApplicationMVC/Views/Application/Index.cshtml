@@ -4,6 +4,10 @@
     string error = ViewBag.error;
 }
 
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+<script src="https://code.jquery.com/ui/1.13.2/jquery-ui.min.js"></script>
+
+
 <div class="container my-4">
     @if (!string.IsNullOrEmpty(error))
     {
@@ -124,3 +128,40 @@
     }
 
 </div>
+
+
+<script>
+    $(document).ready(function () {
+        function autofillSchools(input) {
+            console.log("Autofilling schools");
+            var schoolName = input.val();
+            if (schoolName.length > 2) {
+                $.ajax({
+                    url: '@Url.Action("GetSchools", "Application")',
+                    data: { schoolName: schoolName },
+                    dataType: 'json',
+                    success: function (data) {
+                        var suggestions = "";
+                        for (var i = 0; i < data.length; i++) {
+                            suggestions += '<li>' + data[i].name + '</li>';
+                        }
+                        if (suggestions) {
+                            input.autocomplete({
+                                source: suggestions.split('\n')
+                            });
+                    }
+                };
+            } else {
+                input.autocomplete('disable');
+            }
+        }
+
+        $('.form-control').each(function () {
+            if ($(this).attr('id').startsWith('school-')) {
+                $(this).on('keyup', function () {
+                    autofillSchools($(this));
+                });
+            }
+        });
+    });
+</script>
