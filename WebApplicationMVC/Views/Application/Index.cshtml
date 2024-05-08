@@ -4,9 +4,47 @@
     string error = ViewBag.error;
 }
 
-<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
-<script src="https://code.jquery.com/ui/1.13.2/jquery-ui.min.js"></script>
+<link rel="stylesheet" href="//code.jquery.com/ui/1.13.0/themes/base/jquery-ui.css">
+<script src="https://code.jquery.com/jquery-3.6.0.js"></script>
+<script src="https://code.jquery.com/ui/1.13.0/jquery-ui.js"></script>
 
+<script>
+    $(function () {
+        console.log("Initializing autocomplete...");
+
+        $(".school-input").autocomplete({
+            source: function (request, response) {
+                console.log("Making AJAX request...");
+                $.ajax({
+                    url: '@Url.Action("GetSchools", "Application")',
+                    type: "GET",
+                    dataType: "json",
+                    data: { schoolName: request.term },
+                    success: function (schools) {
+                        console.log("AJAX request successful.", schools);
+                        var normalizedResponse = schools.map(school => {
+                            return {
+                                label: school.name, // This is the label shown in the autocomplete dropdown
+                                value: school.name, // This is the value returned on selection
+                            };
+                        });
+
+                        console.log("Normalized response:", normalizedResponse);
+                        response(normalizedResponse);
+                    },
+                    error: function () {
+                        console.error("AJAX request failed.");
+                    }
+                });
+            },
+            minLength: 1,
+            select: function (event, ui) {
+                console.log("Selected school:", ui.item.value);
+            }
+        });
+    });
+
+</script>
 
 <div class="container my-4">
     @if (!string.IsNullOrEmpty(error))
@@ -98,23 +136,18 @@
 
     <hr />
     <h1>Přihlášky</h1>
-    <div id="applications-section">
+        <div overflow: visible>
         @for (int i = 0; i < 3; i++)
         {
             <div class="row mb-3">
                 <div class="col-md-6">
                     <label for="school-@i">Škola</label>
-                    <input type="text" class="form-control" name="school-@i" id="school-@i" placeholder="Zadejte název školy">
+                        <input type="text" class="form-control school-input" name="school-@i" id="school-@i" placeholder="Zadejte název školy">
                 </div>
                 <div class="col-md-6">
                     <label for="specialization-@i">Specializace</label>
                     <select class="form-control" name="specialization-@i" id="specialization-@i">
                         <option value="">Vyberte specializaci</option>
-                        <option value="informatics">Informatika</option>
-                        <option value="engineering">Inženýrství</option>
-                        <option value="medicine">Medicína</option>
-                        <option value="business">Podnikání</option>
-                        <!-- Add more specializations as needed -->
                     </select>
                 </div>
             </div>
@@ -129,39 +162,3 @@
 
 </div>
 
-
-<script>
-    $(document).ready(function () {
-        function autofillSchools(input) {
-            console.log("Autofilling schools");
-            var schoolName = input.val();
-            if (schoolName.length > 2) {
-                $.ajax({
-                    url: '@Url.Action("GetSchools", "Application")',
-                    data: { schoolName: schoolName },
-                    dataType: 'json',
-                    success: function (data) {
-                        var suggestions = "";
-                        for (var i = 0; i < data.length; i++) {
-                            suggestions += '<li>' + data[i].name + '</li>';
-                        }
-                        if (suggestions) {
-                            input.autocomplete({
-                                source: suggestions.split('\n')
-                            });
-                    }
-                };
-            } else {
-                input.autocomplete('disable');
-            }
-        }
-
-        $('.form-control').each(function () {
-            if ($(this).attr('id').startsWith('school-')) {
-                $(this).on('keyup', function () {
-                    autofillSchools($(this));
-                });
-            }
-        });
-    });
-</script>

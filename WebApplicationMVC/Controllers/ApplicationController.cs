@@ -12,10 +12,11 @@ namespace WebApplicationMVC.Controllers
         {
             this.databaseService = databaseService;
         }
+
         [HttpGet]
-        public async Task<IActionResult> GetSchools()
+        public async Task<IActionResult> GetSchools(string schoolName)
         {
-            var schools = await databaseService.GetSchoolsAsync();
+            var schools = (await databaseService.GetSchoolsAsync()).Select(x => new {x.SchoolId, x.Name}).Where(x => x.Name.Contains(schoolName, StringComparison.OrdinalIgnoreCase)).ToList();
             return Json(schools);
         }
 
