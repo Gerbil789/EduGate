@@ -8,9 +8,10 @@ using Database.Repositories;
 
 namespace DesktopApp.Windows
 {
-
     public partial class MainWindow : Window
     {
+        private TextLogger logger;
+        private ObservableCollection<string> logEntries = new ObservableCollection<string>();
         private readonly DatabaseRepository repository;
         public ObservableCollection<Student> Students { get; set; } = new();
         public ObservableCollection<School> Schools { get; set; } = new();
@@ -20,7 +21,24 @@ namespace DesktopApp.Windows
             this.DataContext = this;
             repository = new DatabaseRepository();
             Initialize().Wait();
+
+            logger = new TextLogger("log.txt", LogEntryAdded);
         }
+
+        public void LogEntryAdded(string logMessage)
+        {
+            Dispatcher.Invoke(() =>
+            {
+                logEntries.Add(logMessage);
+            });
+        }
+
+        protected override void OnClosed(EventArgs e)
+        {
+            base.OnClosed(e);
+            logger.Stop(); // Ensure logger is stopped gracefully
+        }
+
         async Task Initialize()
         {
             try
@@ -96,10 +114,12 @@ namespace DesktopApp.Windows
                 if (await repository.AddStudent(form.Student))
                 {
                     Students.Add(form.Student);
+                    logger.Log($"Student {form.Student} added");
                 }
             }
             catch (Exception ex)
             {
+                logger.Log($"Error adding student {form.Student}: {ex.Message}");
                 MessageBox.Show(ex.Message, "Error", MessageBoxButton.OK, MessageBoxImage.Error);
             }
         }
@@ -118,10 +138,12 @@ namespace DesktopApp.Windows
                 if (await repository.DeleteStudent(student))
                 {
                     Students.Remove(student);
+                    logger.Log($"Student {student} deleted");
                 }
             }
             catch (Exception ex)
             {
+                logger.Log($"Error deleting student {student}: {ex.Message}");
                 MessageBox.Show(ex.Message, "Error", MessageBoxButton.OK, MessageBoxImage.Error);
             }
         }
@@ -139,9 +161,11 @@ namespace DesktopApp.Windows
             try
             {
                 await repository.UpdateStudent(form.Student);
+                logger.Log($"Student {form.Student} updated");
             }
             catch (Exception ex)
             {
+                logger.Log($"Error updating student {student}: {ex.Message}");
                 MessageBox.Show(ex.Message, "Error", MessageBoxButton.OK, MessageBoxImage.Error);
             }
         }
@@ -160,10 +184,12 @@ namespace DesktopApp.Windows
                 if (await repository.AddSchool(form.School))
                 {
                     Schools.Add(form.School);
+                    logger.Log($"School {form.School} added");
                 }
             }
             catch (Exception ex)
             {
+                logger.Log($"Error adding school {form.School}: {ex.Message}");
                 MessageBox.Show(ex.Message, "Error", MessageBoxButton.OK, MessageBoxImage.Error);
             }
         }
@@ -183,10 +209,12 @@ namespace DesktopApp.Windows
 
                 var updatedSchool = await repository.UpdateSchool(form.School);
                 Schools[Schools.IndexOf(school)] = updatedSchool;
+                logger.Log($"School {form.School} updated");
                 
             }
             catch (Exception ex)
             {
+                logger.Log($"Error updating school: {ex.Message}");
                 MessageBox.Show(ex.Message, "Error", MessageBoxButton.OK, MessageBoxImage.Error);
             }
         }
@@ -206,10 +234,12 @@ namespace DesktopApp.Windows
                 if (await repository.DeleteSchool(school))
                 {
                     Schools.Remove(school);
+                    logger.Log($"School {school} deleted");
                 }
             }
             catch (Exception ex)
             {
+                logger.Log($"Error deleting school {school}: {ex.Message}");
                 MessageBox.Show(ex.Message, "Error", MessageBoxButton.OK, MessageBoxImage.Error);
             }
         }

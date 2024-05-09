@@ -1,8 +1,0 @@
-﻿<h1>Seznam produktů</h1>
-
-<ul>
-  @foreach (Product product in ViewBag.Products)
-  {
-    <li><a href="@Url.Action("Detail", new { id = product.Id})">@product.Name</a></li>
-  }
-</ul>

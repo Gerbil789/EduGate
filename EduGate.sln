@@ -7,7 +7,7 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Database", "Database\Databa
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "DesktopApp", "DesktopApp\DesktopApp.csproj", "{EAA154D9-1717-4948-9154-37DDB9FDA91D}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "WebApplicationMVC", "WebApplicationMVC\WebApplicationMVC.csproj", "{2BE637DF-3186-41DB-B50D-80239A30F055}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "WebApp", "WebApplicationMVC\WebApp.csproj", "{2BE637DF-3186-41DB-B50D-80239A30F055}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

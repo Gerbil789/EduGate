@@ -12,17 +12,62 @@ namespace Database.Repositories
         }
 
         //--------------------Students--------------------
+
+        public async Task<Student> Login(string email, string password)
+        {
+            try
+            {
+                var student = await dbContext.Students.FirstOrDefaultAsync(x => x.Email == email && x.Password == password);
+                if (student == null) throw new Exception("Invalid email or password");
+                return student;
+            }
+            catch (Exception e)
+            {
+                throw new Exception(e.Message);
+            }
+        }
+
+        public async Task<Student> Register(Student student)
+        {
+            try
+            {
+                await dbContext.Students.AddAsync(student);
+                await dbContext.SaveChangesAsync();
+                return student;
+            }
+            catch (Exception e)
+            {
+                throw new Exception(e.Message);
+            }
+        }
+
+       
+
+
         public async Task<IEnumerable<Student>> GetStudents()
         {
             try
             {
-                return await dbContext.Students.Include(x => x.Address).Include(x => x.Phone).Include(x => x.Application1).Include(x => x.Application3).Include(x => x.Application1).ToListAsync();
+                return await dbContext.Students.Include(x => x.Address).Include(x => x.Phone).Include(x => x.Application1).Include(x => x.Application2).Include(x => x.Application3).ToListAsync();
             }
             catch(Exception e)
             {
                 throw new Exception(e.Message);
             }
         }
+
+        public async Task<Student> GetStudent(int studentId)
+        {
+            try
+            {
+                return await dbContext.Students.Include(x => x.Address).Include(x => x.Phone).Include(x => x.Application1).Include(x => x.Application2).Include(x => x.Application3).FirstOrDefaultAsync(x => x.StudentId == studentId);
+            }
+            catch (Exception e)
+            {
+                throw new Exception(e.Message);
+            }
+        }
+
         public async Task<bool> AddStudent(Student student)
         {
             try
@@ -180,5 +225,7 @@ namespace Database.Repositories
             
         }
 
+
+        
     }
 }
