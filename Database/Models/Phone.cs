@@ -40,7 +40,7 @@ namespace Database.Models
         private string number = string.Empty;
         [DisplayName("Telefonní číslo")]
         [Required(ErrorMessage = "Telefonní číslo je povinné")]
-        [RegularExpression(@"^\d{9}$", ErrorMessage = "Telefonní číslo musí mít 9 číslic")]
+        [RegularExpression(@"^\d{9}$", ErrorMessage = "Telefonní číslo musí mít 9 číslic (bez mezer)")]
         public string Number
         {
             get { return number; }

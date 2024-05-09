@@ -10,18 +10,16 @@
 
 <script>
     $(function () {
-        console.log("Initializing autocomplete...");
-
+        console.log("Initializing school autocomplete...");
         $(".school-input").autocomplete({
             source: function (request, response) {
-                console.log("Making AJAX request...");
                 $.ajax({
                     url: '@Url.Action("GetSchools", "Application")',
                     type: "GET",
                     dataType: "json",
                     data: { schoolName: request.term },
                     success: function (schools) {
-                        console.log("AJAX request successful.", schools);
+                        console.log("AJAX request successful. (schools)", schools);
                         var normalizedResponse = schools.map(school => {
                             return {
                                 label: school.name, // This is the label shown in the autocomplete dropdown
@@ -43,8 +41,9 @@
             }
         });
     });
-
 </script>
+
+
 
 <div class="container my-4">
     @if (!string.IsNullOrEmpty(error))
@@ -74,7 +73,7 @@
         <div class="row mb-3">
             <div class="col-md-6">
                 @Html.LabelFor(x => x.BirthDate, new { @class = "form-label" })
-                @Html.TextBoxFor(x => x.BirthDate, new { @class = "form-control", type = "date" })
+        @Html.TextBoxFor(x => x.BirthDate, new { @class = "form-control", type = "date", value = Model.BirthDate.ToString("dd-MM-yyyy"), name = "date" })
                 @Html.ValidationMessageFor(x => x.BirthDate, "", new { @class = "text-danger" })
             </div>
         </div>
@@ -142,13 +141,11 @@
             <div class="row mb-3">
                 <div class="col-md-6">
                     <label for="school-@i">Škola</label>
-                        <input type="text" class="form-control school-input" name="school-@i" id="school-@i" placeholder="Zadejte název školy">
+            <input type="text" class="form-control school-input" name="school" id="school-@i" placeholder="Zadejte název školy" value="@ViewBag.Schools[@i]">
                 </div>
                 <div class="col-md-6">
                     <label for="specialization-@i">Specializace</label>
-                    <select class="form-control" name="specialization-@i" id="specialization-@i">
-                        <option value="">Vyberte specializaci</option>
-                    </select>
+            <input type="text" class="form-control program-input" name="program" id="program-@i" placeholder="Zadejte studijní obor" value="@ViewBag.Programs[@i]">
                 </div>
             </div>
         }
