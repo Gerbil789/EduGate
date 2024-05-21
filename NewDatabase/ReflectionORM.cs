@@ -9,10 +9,11 @@ public class ReflectionORM
     private readonly string connectionString;
     private readonly string dbFilePath;
 
-    public ReflectionORM(string dbName = "MyDatabase.db")
+    public ReflectionORM(string dbName = "EduGateDatabase.db")
     {
-        dbFilePath = dbName;
-        connectionString = $"Data Source={dbName};Version=3;";
+        var path = @"C:\Users\vojta\source\repos\EduGate\NewDatabase\bin\Debug\net8.0";
+        dbFilePath = Path.Combine(path, dbName);
+        connectionString = $"Data Source={dbFilePath};Version=3;";
     }
 
     public void CreateDatabase()
@@ -79,7 +80,7 @@ public class ReflectionORM
     }
 
 
-    public void Insert<T>(T obj) where T : new()
+    public async Task Insert<T>(T obj) where T : new()
     {
         var type = obj.GetType();
         var tableName = type.Name;
@@ -94,7 +95,7 @@ public class ReflectionORM
             connection.Open();
             using (var command = new SQLiteCommand(sql, connection))
             {
-                var lastId = Convert.ToInt64(command.ExecuteScalar());
+                var lastId = Convert.ToInt64(await command.ExecuteScalarAsync());
                 var autoIncrementProperty = type.GetProperties()
                     .FirstOrDefault(p => p.GetCustomAttribute<AutoIncrementAttribute>() != null);
                 if (autoIncrementProperty != null && lastId > 0)
@@ -104,7 +105,7 @@ public class ReflectionORM
             }
         }
     }
-    public List<T> Select<T>() where T : new()
+    public async Task<List<T>> Select<T>() where T : new()
     {
         var type = typeof(T);
         var tableName = type.Name;
@@ -118,7 +119,7 @@ public class ReflectionORM
             connection.Open();
             using (var command = new SQLiteCommand(sql, connection))
             {
-                using (var reader = command.ExecuteReader())
+                using (var reader = await command.ExecuteReaderAsync())
                 {
                     var list = new List<T>();
                     while (reader.Read())
@@ -139,7 +140,7 @@ public class ReflectionORM
             }
         }
     }
-    public void Update<T>(T obj)
+    public async Task Update<T>(T obj)
     {
         var type = obj.GetType();
         var tableName = type.Name;
@@ -157,11 +158,11 @@ public class ReflectionORM
             connection.Open();
             using (var command = new SQLiteCommand(sql, connection))
             {
-                command.ExecuteNonQuery();
+                await command.ExecuteScalarAsync();
             }
         }
     }
-    public void Delete<T>(T obj)
+    public async Task Delete<T>(T obj)
     {
         var type = obj.GetType();
         var tableName = type.Name;
@@ -177,7 +178,7 @@ public class ReflectionORM
             connection.Open();
             using (var command = new SQLiteCommand(sql, connection))
             {
-                command.ExecuteNonQuery();
+                await command.ExecuteScalarAsync();
             }
         }
     }

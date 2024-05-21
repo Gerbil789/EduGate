@@ -6,9 +6,10 @@ namespace ConsoleApp
     class Program
     {
 
-        static void Main(string[] args)
+        static async Task Main(string[] args)
         {
             ReflectionORM orm = new();
+
 
             orm.CreateDatabase();
             
@@ -30,26 +31,53 @@ namespace ConsoleApp
                 State = "Bruh"
             };
 
-            orm.Insert(address1);
-            orm.Insert(address2);
+            await orm.Insert(address1);
+            await orm.Insert(address2);
 
-            School school = new()
+            School school1 = new()
             {
                 Name = "Oslo School",
                 AddressId = address1.AddressId
             };
 
-            orm.Insert(school);
+            School school2 = new()
+            {
+                Name = "Bruh School",
+                AddressId = address2.AddressId
+            };
+
+            await orm.Insert(school1);
+            await orm.Insert(school2);
 
 
-            StudyProgram studyProgram = new()
+            StudyProgram studyProgram1 = new()
             {
                 Name = "Computer Science",
                 AvailableSeats = 10,
-                SchoolId = school.SchoolId
+                SchoolId = school1.SchoolId
             };
 
-            orm.Insert(studyProgram);
+            StudyProgram studyProgram2 = new()
+            {
+                Name = "Electronics",
+                AvailableSeats = 20,
+                SchoolId = school1.SchoolId
+            };
+
+            StudyProgram studyProgram3 = new()
+            {
+                Name = "Bruhing",
+                AvailableSeats = 7,
+                SchoolId = school2.SchoolId
+            };
+
+
+
+            await orm.Insert(studyProgram1);
+            await orm.Insert(studyProgram2);
+            await orm.Insert(studyProgram3);
+
+
 
             Student student = new()
             {
@@ -59,32 +87,37 @@ namespace ConsoleApp
                 Email = "Bruhman@gmail.com",
                 AddressId = address2.AddressId,
                 Password = "password",
-                Number = "123456789",
-                Code = "+420"
+                Code = "+420",
+                Number = "123456789"
             };
 
-            orm.Insert(student);
+            await orm.Insert(student);
 
-            var students = orm.Select<Student>();
+           
 
-            Application application = new()
-            {
-                StudentId = student.StudentId,
-                StudyProgramId = studyProgram.StudyProgramId,
-                Date = DateTime.Now
-            };
+            //Application application = new()
+            //{
+            //    StudentId = student.StudentId,
+            //    StudyProgramId = studyProgram.StudyProgramId,
+            //    Date = DateTime.Now
+            //};
 
-            orm.Insert(application);
-
-
-
-            int applicationId = application.ApplicationId;
+            //await orm.Insert(application);
 
 
-            var app = orm.Select<Application>().FirstOrDefault(a => a.ApplicationId == applicationId); 
-            var pro = orm.Select<StudyProgram>().FirstOrDefault(s => s.StudyProgramId == app.StudyProgramId);
-            var stud = orm.Select<Student>().FirstOrDefault(s => s.StudentId == app.StudentId);
-            var sch = orm.Select<School>().FirstOrDefault(s => s.SchoolId == pro.SchoolId);
+
+            //int applicationId = application.ApplicationId;
+
+
+            //var app = (await orm.Select<Application>()).FirstOrDefault(a => a.ApplicationId == applicationId); 
+            //var pro = (await orm.Select<StudyProgram>()).FirstOrDefault(s => s.StudyProgramId == app.StudyProgramId);
+            //var stud = (await orm.Select<Student>()).FirstOrDefault(s => s.StudentId == app.StudentId);
+            //var sch = (await orm.Select<School>()).FirstOrDefault(s => s.SchoolId == pro.SchoolId);
+
+            //Console.WriteLine($"Student: {stud.FirstName} {stud.LastName}");
+            //Console.WriteLine($"School: {sch.Name}");
+            //Console.WriteLine($"Study Program: {pro.Name}");
+            //Console.WriteLine($"Application Date: {app.Date}");
 
           
         }

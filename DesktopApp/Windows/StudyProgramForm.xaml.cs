@@ -1,5 +1,4 @@
-﻿using NewDatabase.Models;
-using DesktopApp.Utilities;
+﻿using DesktopApp.Models;
 using System.Windows;
 
 namespace DesktopApp.Windows
@@ -24,7 +23,6 @@ namespace DesktopApp.Windows
                 StudyProgram.Name = program.Name;
                 StudyProgram.Description = program.Description;
                 StudyProgram.AvailableSeats = program.AvailableSeats;
-                StudyProgram.Identifier = program.Identifier;
             }
 
             this.DataContext = StudyProgram;
@@ -32,7 +30,7 @@ namespace DesktopApp.Windows
 
         private void Save(object sender, RoutedEventArgs e)
         {
-            StudyProgram.Identifier = StudyProgramHelper.GenerateProgramIdentifier(StudyProgram);
+            StudyProgram.Identifier = $"{StudyProgram.Name.Substring(0, 3).ToUpper()}-{StudyProgram.AvailableSeats}";
             DialogResult = true;
             this.Close();
         }

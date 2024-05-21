@@ -1,5 +1,4 @@
-﻿using Database.Models;
-using Database.Repositories;
+﻿using DesktopApp.Models;
 using System.Windows;
 using System.Windows.Controls;
 

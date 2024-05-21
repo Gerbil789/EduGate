@@ -1,4 +1,4 @@
-﻿using Database.Models;
+﻿using DesktopApp.Models;
 using System.Windows;
 using System.Windows.Controls;
 
@@ -29,36 +29,66 @@ namespace DesktopApp.Windows
                 Student.Address.State = student.Address.State;
                 Student.Address.ZipCode = student.Address.ZipCode;
                 Student.Email = student.Email;
-                Student.Phone.Code = student.Phone.Code;
-                Student.Phone.Number = student.Phone.Number;
-                Student.Application1 = student.Application1;
-                Student.Application2 = student.Application2;
-                Student.Application3 = student.Application3;
+                Student.Code = student.Code;
+                Student.Number = student.Number;
+                Student.Applications = student.Applications;
 
             }
             else
             {
                 Title = "Add student";
                 ConfirmButton.Content = "Přidat";
+                Student.Applications.Add(new Models.Application() { Student = this.Student });
+                Student.Applications.Add(new Models.Application() { Student = this.Student });
+                Student.Applications.Add(new Models.Application() { Student = this.Student });
             }
             school1.ItemsSource = parent.Schools;
             school2.ItemsSource = parent.Schools;
             school3.ItemsSource = parent.Schools;
 
-         
-            school1.SelectedValue = parent.Schools.FirstOrDefault(x => x.StudyPrograms.Contains(Student.Application1.StudyProgram));
-            school2.SelectedValue = parent.Schools.FirstOrDefault(x => x.StudyPrograms.Contains(Student.Application2.StudyProgram));
-            school3.SelectedValue = parent.Schools.FirstOrDefault(x => x.StudyPrograms.Contains(Student.Application3.StudyProgram));
+            if (Student.Applications[0]?.StudyProgram?.StudyProgramId != 0)
+            {
+                var program = Student.Applications[0].StudyProgram;
+                if (program != null)
+                {
+                    var schoolId = parent.db.GetSchoolIdByStudyProgram(program.StudyProgramId).Result;
+                    var school = parent.Schools.FirstOrDefault(x => x.SchoolId == schoolId);
+                    school1.SelectedValue = school;
 
-            program1.ItemsSource = ((School)school1.SelectedValue)?.StudyPrograms ?? null;
-            program2.ItemsSource = ((School)school2.SelectedValue)?.StudyPrograms ?? null;
-            program3.ItemsSource = ((School)school3.SelectedValue)?.StudyPrograms ?? null;
+                    program1.ItemsSource = school?.StudyPrograms ?? null;
+                    program1.SelectedValue = school?.StudyPrograms.FirstOrDefault(x => x.StudyProgramId == program.StudyProgramId);
+                }
+            }
 
-            program1.SelectedValue = Student.Application1.StudyProgram;
-            program2.SelectedValue = Student.Application2.StudyProgram;
-            program3.SelectedValue = Student.Application3.StudyProgram;
+            if (Student.Applications[1]?.StudyProgram?.StudyProgramId != 0)
+            {
+                var program = Student.Applications[1].StudyProgram;
+                if (program != null)
+                {
+                    var schoolId = parent.db.GetSchoolIdByStudyProgram(program.StudyProgramId).Result;
+                    var school = parent.Schools.FirstOrDefault(x => x.SchoolId == schoolId);
+                    school2.SelectedValue = school;
 
+                    program2.ItemsSource = school?.StudyPrograms ?? null;
+                    program2.SelectedValue = school?.StudyPrograms.FirstOrDefault(x => x.StudyProgramId == program.StudyProgramId);
+                }
+            }
 
+            if (Student.Applications[2]?.StudyProgram?.StudyProgramId != 0)
+            {
+                var program = Student.Applications[2].StudyProgram;
+                if (program != null)
+                {
+                    var schoolId = parent.db.GetSchoolIdByStudyProgram(program.StudyProgramId).Result;
+                    var school = parent.Schools.FirstOrDefault(x => x.SchoolId == schoolId);
+                    school3.SelectedValue = school;
+
+                    program3.ItemsSource = school?.StudyPrograms ?? null;
+                    program3.SelectedValue = school?.StudyPrograms.FirstOrDefault(x => x.StudyProgramId == program.StudyProgramId);
+                }
+            }
+
+        
 
             this.DataContext = Student;
         }
@@ -80,17 +110,18 @@ namespace DesktopApp.Windows
             }
            
             var comboBoxName = comboBox.Name;
+            var school = (School)comboBox.SelectedItem;
 
             switch(comboBoxName)
             {
                 case "school1":
-                    program1.ItemsSource = ((School)comboBox.SelectedItem).StudyPrograms;
+                    program1.ItemsSource = school.StudyPrograms;
                     break;
                 case "school2":
-                    program2.ItemsSource = ((School)comboBox.SelectedItem).StudyPrograms;
+                    program2.ItemsSource = school.StudyPrograms;
                     break;
                 case "school3":
-                    program3.ItemsSource = ((School)comboBox.SelectedItem).StudyPrograms;
+                    program3.ItemsSource = school.StudyPrograms;
                     break;
             }
         }
@@ -103,13 +134,13 @@ namespace DesktopApp.Windows
             switch (comboBoxName)
             {
                 case "program1":
-                    Student.Application1.StudyProgram = (StudyProgram)comboBox.SelectedItem;
+                    Student.Applications[0].StudyProgram = (StudyProgram)comboBox.SelectedItem;
                     break;
                 case "program2":
-                    Student.Application2.StudyProgram = (StudyProgram)comboBox.SelectedItem;
+                    Student.Applications[1].StudyProgram = (StudyProgram)comboBox.SelectedItem;
                     break;
                 case "program3":
-                    Student.Application3.StudyProgram = (StudyProgram)comboBox.SelectedItem;
+                    Student.Applications[2].StudyProgram = (StudyProgram)comboBox.SelectedItem;
                     break;
             }
         }
@@ -122,7 +153,6 @@ namespace DesktopApp.Windows
             switch (buttonName)
             {
                 case "reset1":
-
                     program1.SelectedValue = -1;
                     school1.SelectedValue = -1;
                     break;

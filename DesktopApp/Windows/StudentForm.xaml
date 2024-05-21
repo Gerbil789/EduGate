@@ -77,8 +77,8 @@
 
         <Label Content="Telefon:" Grid.Row="6" Grid.Column="1"></Label>
         <DockPanel Grid.Row="7" Grid.Column="1" Margin="5 0">
-            <TextBox Text="{Binding Phone.Code}" Width="50" Margin="0 0 5 0"></TextBox>
-            <TextBox Text="{Binding Phone.Number}" ></TextBox>
+            <TextBox Text="{Binding Code}" Width="50" Margin="0 0 5 0"></TextBox>
+            <TextBox Text="{Binding Number}" ></TextBox>
         </DockPanel>
 
 
@@ -88,15 +88,15 @@
         <Label Content="Studijní obor:" Grid.Row="9" Grid.Column="1"></Label>
 
         <ComboBox x:Name="school1" Grid.Row="10" Grid.Column="0" Margin="5" SelectionChanged="SchoolSelectionChanged"></ComboBox>
-        <ComboBox x:Name="program1" ItemsSource="{Binding Application1.StudyProgram}" Grid.Row="10" Grid.Column="1" Margin="5" SelectionChanged="ProgramSelectionChanged"></ComboBox>
+        <ComboBox x:Name="program1" ItemsSource="{Binding Applications[0].StudyProgram}" Grid.Row="10" Grid.Column="1" Margin="5" SelectionChanged="ProgramSelectionChanged"></ComboBox>
         <Button x:Name="reset1" Grid.Row="10" Grid.Column="2" Content="Reset" Margin="5" Click="ResetStudyProgram"></Button>
 
         <ComboBox x:Name="school2" Grid.Row="11" Grid.Column="0" Margin="5" SelectionChanged="SchoolSelectionChanged"></ComboBox>
-        <ComboBox x:Name="program2" ItemsSource="{Binding Application2.StudyProgram}" Grid.Row="11" Grid.Column="1" Margin="5" SelectionChanged="ProgramSelectionChanged"></ComboBox>
+        <ComboBox x:Name="program2" ItemsSource="{Binding Applications[1].StudyProgram}" Grid.Row="11" Grid.Column="1" Margin="5" SelectionChanged="ProgramSelectionChanged"></ComboBox>
         <Button x:Name="reset2" Grid.Row="11" Grid.Column="2" Content="Reset" Margin="5" Click="ResetStudyProgram"></Button>
 
         <ComboBox x:Name="school3" Grid.Row="12" Grid.Column="0" Margin="5" SelectionChanged="SchoolSelectionChanged"></ComboBox>
-        <ComboBox x:Name="program3" ItemsSource="{Binding Application3.StudyProgram}" Grid.Row="12" Grid.Column="1" Margin="5" SelectionChanged="ProgramSelectionChanged"></ComboBox>
+        <ComboBox x:Name="program3" ItemsSource="{Binding Applications[2].StudyProgram}" Grid.Row="12" Grid.Column="1" Margin="5" SelectionChanged="ProgramSelectionChanged"></ComboBox>
         <Button x:Name="reset3" Grid.Row="12" Grid.Column="2" Content="Reset" Margin="5" Click="ResetStudyProgram"></Button>
 
 

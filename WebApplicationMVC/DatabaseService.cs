@@ -1,18 +1,18 @@
-﻿using Database.Repositories;
-using Database.Models;
+﻿using NewDatabase;
+using NewDatabase.Models;
 using Microsoft.AspNetCore.Http;
 
 namespace WebApplicationMVC
 {
     public class DatabaseService
     {
-        private readonly DatabaseRepository databaseRepository = new();
+        private readonly Database db = new();
 
         public async Task<bool> Login(string email, string password, HttpContext httpContext)
         {
             try
             {
-                var student = await databaseRepository.Login(email, password);
+                var student = await db.Login(email, password);
                 httpContext.Session.SetInt32("LoggedUserId", student.StudentId);
                 httpContext.Session.SetString("LoggedUserEmail", student.Email);
                 return true;
@@ -27,7 +27,7 @@ namespace WebApplicationMVC
         {
             try
             {
-                var s = await databaseRepository.Register(student);
+                var s = await db.Register(student);
                 httpContext.Session.SetInt32("LoggedUserId", s.StudentId);
                 httpContext.Session.SetString("LoggedUserEmail", s.Email);
                 return true;
@@ -45,14 +45,14 @@ namespace WebApplicationMVC
         }
         public async Task<List<School>> GetSchoolsAsync()
         {
-            return (await databaseRepository.GetSchools()).ToList();
+            return (await db.GetSchools()).ToList();
         }
 
         public async Task<bool> UpdateStudent(Student student)
         {
             try
             {
-                return await databaseRepository.UpdateStudent(student);
+                return await db.UpdateStudent(student);
             }
             catch
             {
@@ -62,7 +62,7 @@ namespace WebApplicationMVC
 
         public async Task<Student> GetStudent(int studentId)
         {
-            return await databaseRepository.GetStudent(studentId);
+            return await db.GetStudent(studentId);
         }
     }
 }

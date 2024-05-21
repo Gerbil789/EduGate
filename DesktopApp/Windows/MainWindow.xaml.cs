@@ -1,10 +1,10 @@
-﻿using NewDatabase.Models;
-using System.Collections.ObjectModel;
+﻿using System.Collections.ObjectModel;
 using System.ComponentModel;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Data;
-using NewDatabase.Repositories;
+using NewDatabase;
+using DesktopApp.Models;
 
 namespace DesktopApp.Windows
 {
@@ -12,15 +12,16 @@ namespace DesktopApp.Windows
     {
         private TextLogger logger;
         private ObservableCollection<string> logEntries = new ObservableCollection<string>();
-        private readonly DatabaseRepository repository;
+        public readonly Database db;
         public ObservableCollection<Student> Students { get; set; } = new();
         public ObservableCollection<School> Schools { get; set; } = new();
         public MainWindow()
         {
             InitializeComponent();
-            this.DataContext = this;
-            repository = new DatabaseRepository();
+            
+            db = new();
             Initialize().Wait();
+            this.DataContext = this;
 
             logger = new TextLogger("log.txt", LogEntryAdded);
         }
@@ -43,14 +44,13 @@ namespace DesktopApp.Windows
         {
             try
             {
-                Students = new ObservableCollection<Student>(await repository.GetStudents());
-                Schools = new ObservableCollection<School>(await repository.GetSchools());
+                Students = new ObservableCollection<Student>(await db.GetStudents());
+                Schools = new ObservableCollection<School>(await db.GetSchools());
             }
             catch(Exception e)
             {
                 MessageBox.Show(e.Message, "Error", MessageBoxButton.OK, MessageBoxImage.Error);
             }
-          
         }
         private void Search(object sender, TextChangedEventArgs e)
         {
@@ -111,11 +111,9 @@ namespace DesktopApp.Windows
 
             try
             {
-                if (await repository.AddStudent(form.Student))
-                {
-                    Students.Add(form.Student);
-                    logger.Log($"Student {form.Student} added");
-                }
+                await db.AddStudent(form.Student);
+                Students.Add(form.Student);
+                logger.Log($"Student {form.Student} added");
             }
             catch (Exception ex)
             {
@@ -135,11 +133,9 @@ namespace DesktopApp.Windows
 
             try
             {
-                if (await repository.DeleteStudent(student))
-                {
-                    Students.Remove(student);
-                    logger.Log($"Student {student} deleted");
-                }
+                await db.DeleteStudent(student);
+                Students.Remove(student);
+                logger.Log($"Student {student} deleted");
             }
             catch (Exception ex)
             {
@@ -160,7 +156,7 @@ namespace DesktopApp.Windows
 
             try
             {
-                await repository.UpdateStudent(form.Student);
+                await db.UpdateStudent(form.Student);
                 logger.Log($"Student {form.Student} updated");
             }
             catch (Exception ex)
@@ -181,11 +177,9 @@ namespace DesktopApp.Windows
 
             try
             {
-                if (await repository.AddSchool(form.School))
-                {
-                    Schools.Add(form.School);
-                    logger.Log($"School {form.School} added");
-                }
+                await db.AddSchool(form.School);
+                Schools.Add(form.School);
+                logger.Log($"School {form.School} added");
             }
             catch (Exception ex)
             {
@@ -207,8 +201,8 @@ namespace DesktopApp.Windows
 
                 if (form.ShowDialog() == false) return;
 
-                var updatedSchool = await repository.UpdateSchool(form.School);
-                Schools[Schools.IndexOf(school)] = updatedSchool;
+                await db.UpdateSchool(form.School);
+                Schools[Schools.IndexOf(school)] = form.School;
                 logger.Log($"School {form.School} updated");
                 
             }
@@ -231,11 +225,9 @@ namespace DesktopApp.Windows
 
             try
             {
-                if (await repository.DeleteSchool(school))
-                {
-                    Schools.Remove(school);
-                    logger.Log($"School {school} deleted");
-                }
+                await db.DeleteSchool(school);
+                Schools.Remove(school);
+                logger.Log($"School {school} deleted");
             }
             catch (Exception ex)
             {
