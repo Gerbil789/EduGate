@@ -1,10 +1,10 @@
-﻿using Database.Models;
+﻿using NewDatabase.Models;
 using System.Collections.ObjectModel;
 using System.ComponentModel;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Data;
-using Database.Repositories;
+using NewDatabase.Repositories;
 
 namespace DesktopApp.Windows
 {
