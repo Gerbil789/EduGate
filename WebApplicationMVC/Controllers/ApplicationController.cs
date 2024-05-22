@@ -1,8 +1,6 @@
-﻿using Database.Models;
+﻿using WebApplicationMVC.DatabaseModels;
 using Microsoft.AspNetCore.Mvc;
-using Database.Repositories;
 using Microsoft.AspNetCore.Mvc.Rendering;
-using System.Xml.Linq;
 
 namespace WebApplicationMVC.Controllers
 {
@@ -58,7 +56,7 @@ namespace WebApplicationMVC.Controllers
       string[] schoolNames = ["", "", ""];
       string[] programs = ["", "", ""];
       int i = 0;
-      foreach (var application in new Application[] { student.Application1, student.Application2, student.Application3 })
+      foreach (var application in student.Applications)
       {
         if (application.StudyProgram != null)
         {
@@ -81,7 +79,7 @@ namespace WebApplicationMVC.Controllers
     {
       ModelState.Remove(nameof(Student.StudentId));
       ModelState.Remove(nameof(Student.Password));
-      ModelState.Remove(nameof(Student.ApplicationCount));
+      ModelState.Remove(nameof(Student.Applications));
      
 
       if (!ModelState.IsValid)
@@ -98,16 +96,22 @@ namespace WebApplicationMVC.Controllers
 
       var schools = await databaseService.GetSchoolsAsync();
 
+      student.Applications = new();
+            student.Applications.Add(new Application() { Student = student });
+            student.Applications.Add(new Application() { Student = student });
+            student.Applications.Add(new Application() { Student = student });
+
       var school1 = schools.FirstOrDefault(x => x.Name == school[0]);
       if(school1 != null)
       {
         var program1 = school1.StudyPrograms.FirstOrDefault(x => x.Name == program[0]);
         if(program1 != null)
         {
-          student.Application1.StudyProgram = program1;
-          student.Application1.SubmissionDate = DateTime.Now;
+          student.Applications[0].StudyProgram = program1;
+          student.Applications[0].Date = DateTime.Now;
         }
-      }
+            }
+
 
       var school2 = schools.FirstOrDefault(x => x.Name == school[1]);
       if (school2 != null)
@@ -115,8 +119,8 @@ namespace WebApplicationMVC.Controllers
         var program2 = school2.StudyPrograms.FirstOrDefault(x => x.Name == program[1]);
         if (program2 != null)
         {
-          student.Application2.StudyProgram = program2;
-          student.Application2.SubmissionDate = DateTime.Now;
+          student.Applications[1].StudyProgram = program2;
+          student.Applications[1].Date = DateTime.Now;
         }
       }
 
@@ -126,8 +130,8 @@ namespace WebApplicationMVC.Controllers
         var program3 = school3.StudyPrograms.FirstOrDefault(x => x.Name == program[2]);
         if (program3 != null)
         {
-          student.Application3.StudyProgram = program3;
-          student.Application3.SubmissionDate = DateTime.Now;
+          student.Applications[2].StudyProgram = program3;
+          student.Applications[2].Date = DateTime.Now;
         }
       }
      

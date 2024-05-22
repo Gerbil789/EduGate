@@ -1,6 +1,5 @@
-﻿using NewDatabase;
-using NewDatabase.Models;
-using Microsoft.AspNetCore.Http;
+﻿using Microsoft.AspNetCore.Http;
+using WebApplicationMVC.DatabaseModels;
 
 namespace WebApplicationMVC
 {
@@ -27,6 +26,11 @@ namespace WebApplicationMVC
         {
             try
             {
+                student.Applications = new();
+                student.Applications.Add(new Application() { Student = student });
+                student.Applications.Add(new Application() { Student = student });
+                student.Applications.Add(new Application() { Student = student });
+
                 var s = await db.Register(student);
                 httpContext.Session.SetInt32("LoggedUserId", s.StudentId);
                 httpContext.Session.SetString("LoggedUserEmail", s.Email);
@@ -52,7 +56,8 @@ namespace WebApplicationMVC
         {
             try
             {
-                return await db.UpdateStudent(student);
+                await db.UpdateStudent(student);
+                return true;
             }
             catch
             {

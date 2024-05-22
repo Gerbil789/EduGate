@@ -1,6 +1,6 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using WebApplicationMVC;
-using Database.Models;
+using WebApplicationMVC.DatabaseModels;
 using System.Text.RegularExpressions;
 
 namespace WebApp.Controllers
